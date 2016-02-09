@@ -65,7 +65,7 @@
                   <table class="table table-user-information">
                     <tbody>
                       <tr>
-                        <td>Programme:</td>
+                        <td>Programe:</td>
                         <td><asp:Label ID="programmelbl" runat="server"></asp:Label></td>
                       </tr>
 
