@@ -1,0 +1,55 @@
+ makingLongInserQuery = "INSERT INTO StudentFee_Mapping (FormNumber, Fee_Type,FeeCatID,FeeAmount)";
+                    DataSet students = db.getStudent_dep_academicYear_semester(department, academicYear, semester);
+                    if (students.Tables[0].Rows.Count > 0)
+                    {
+                        for (int i = 0; i < students.Tables[0].Rows.Count; i++)
+                        {
+                            string formNum = students.Tables[0].Rows[i]["Form Number"].ToString();
+                            string studentType = students.Tables[0].Rows[i]["studentType"].ToString();
+
+                           
+                            DataRow[] td = discountStudents.Tables[0].Select("[StudentType] = '" + studentType + "'");
+                            if (td != null && td.Length > 0)
+                            {
+                                double discountPer = Convert.ToDouble(td[0].ItemArray[2].ToString());
+                                double newFeeAmount = 0;
+                                if (discountPer > 0)
+                                {
+                                    newFeeAmount = Convert.ToDouble((discountPer  .01)  Convert.ToDouble(feeAmount));
+                                }
+                                else 
+                                {
+                                    newFeeAmount = 0;
+                                }
+                                if (i == students.Tables[0].Rows.Count -1)
+                                {
+                                    makingLongInserQuery += " SELECT '" + formNum + "','" + feeName + "'," + feeCatID + " ,'" + (Convert.ToDouble(feeAmount) - newFeeAmount) + "'   ";
+                                }
+                                else
+                                {
+                                    makingLongInserQuery += " SELECT '" + formNum + "','" + feeName + "'," + feeCatID + " ,'" + (Convert.ToDouble( feeAmount)-newFeeAmount) + "'   UNION ALL";
+                                }
+                            }
+                            else 
+                            {
+                                if (i == students.Tables[0].Rows.Count - 1)
+                                {
+                                    makingLongInserQuery += " SELECT '" + formNum + "','" + feeName + "'," + feeCatID + " ,'" + feeAmount + "'   ";
+                                }
+                                else
+                                {
+                                    makingLongInserQuery += " SELECT '" + formNum + "','" + feeName + "'," + feeCatID + " ,'" + feeAmount + "'   UNION ALL";
+                                }
+                            }
+
+                        }
+
+                        db.AssignFeeCategoryToBatch_CUSTOMQUERYRUN(makingLongInserQuery);
+                     //   db.AssignFeeCategoryToBatch(feeName, feeCatID.ToString(), feeAmount, department, academicYear, semester);
+
+                        db.RecordAssignedCategory(feeCatID.ToString(), department, academicYear, semester);
+
+                        updateMessage2.Style.Add("Color", "Green");
+                        updateMessage2.Style.Add("Display", "inline");
+                        updateMessage2.InnerText = "Fee Category assigned Successfully!";
+                    }

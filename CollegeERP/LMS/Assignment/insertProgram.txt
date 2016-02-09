@@ -1,0 +1,39 @@
+  public int InsertStudentBills(string program, string StudentLevel, string Department,string Semester,
+                                    string AcademicYear,int Amount,string SplitXml,string FeeText)
+    {
+        int id = -1;
+        try
+        {
+            //Begin Select ID from StudentBills where Program=@1 and StudentLevel=@2
+            //and Department=@3 and Semester=@4 and AcademicYear=@5 end
+            //else
+            using (DM dbManager = new DM())
+            {
+                dbManager.Command.CommandText = @"IF NOT EXISTS (Select ID from StudentBills where Program=@1 and StudentLevel=@2
+                                                and Department=@3 and Semester=@4 and AcademicYear=@5)
+         
+Begin
+Insert into StudentBills(Program,StudentLevel,Department,Semester,AcademicYear,Amount,SplitXML,FeeText) 
+                                            Values (@1,@2,@3,@4,@5,@6,@7,@8); SELECT SCOPE_IDENTITY() end;";
+
+                dbManager.Command.Parameters.AddWithValue("@1", program);
+                dbManager.Command.Parameters.AddWithValue("@2", StudentLevel);
+                dbManager.Command.Parameters.AddWithValue("@3", Department);
+                dbManager.Command.Parameters.AddWithValue("@4", Semester);
+                dbManager.Command.Parameters.AddWithValue("@5", AcademicYear);
+                dbManager.Command.Parameters.AddWithValue("@6", Amount);
+                dbManager.Command.Parameters.AddWithValue("@7", SplitXml);
+                dbManager.Command.Parameters.AddWithValue("@8", FeeText);
+
+
+                id = Convert.ToInt32(dbManager.Command.ExecuteScalar());
+
+            }
+        }
+        catch (Exception exp)
+        {
+            throw;
+        }
+
+        return id;
+    }
