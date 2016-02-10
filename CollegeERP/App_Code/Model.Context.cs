@@ -145,5 +145,7 @@ public partial class CollegeERPDBEntities : DbContext
 
     public virtual DbSet<Questionaire_tbl> Questionaire_tbl { get; set; }
 
+    public virtual DbSet<UploadedQuestionaire> UploadedQuestionaires { get; set; }
+
 }
 

@@ -30,10 +30,10 @@
      
 
        
-        <div class="form-group">
-      <asp:Button ID="NextBtn" ClientIDMode="Static" CssClass="btn btn-success" runat="server" Text="Next" OnClick="NextBtn_Click" />
-      <asp:Button ID="submitbtn" Visible="false" ClientIDMode="Static" CssClass="btn btn-success" runat="server" OnClick="submitbtn_Click" Text="Submit"  />
-      
+        <div class="form-group">d
+      <asp:Button ID="NextBtn" ClientIDMode="Static" CssClass="btn btn-success" runat="server" Text="Next" OnClick="NextBtn_Click" /><br /><br />
+      <asp:Button ID="submitbtn" Visible="false" ClientIDMode="Static" CssClass="btn btn-success" runat="server"  OnClick="submitbtn_Click" Text="Submit"   /><br /><br />
+      <asp:Label ID="errorlbl" runat="server" Text="Already Submitted" Visible="false"></asp:Label>
                 </ContentTemplate>
       </asp:UpdatePanel>
         

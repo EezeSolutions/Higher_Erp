@@ -136,6 +136,8 @@
         <AssociationConnector Association="CollegeERPDBModel.FK_StudentSelectedCredits_Candidate_tbl" />
         <EntityTypeShape EntityType="CollegeERPDBModel.Questionaire_tbl" Width="1.5" PointX="0.75" PointY="1" />
         <AssociationConnector Association="CollegeERPDBModel.FK_Answers_tbl_Questionaire_tbl" />
+        <EntityTypeShape EntityType="CollegeERPDBModel.UploadedQuestionaire" Width="1.5" PointX="7.5" PointY="53.5" />
+        <AssociationConnector Association="CollegeERPDBModel.FK_UploadedQuestionaire_Candidate_tbl" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
