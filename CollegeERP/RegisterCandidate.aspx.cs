@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -10,15 +11,18 @@ public partial class Default2 : System.Web.UI.Page
 {
     protected string UploadFolderPath = "/images/";
     protected string FllUploadFolderPath = "http://apply.polyibadan.edu.ng/Students/profilePics/";
-
+    string pagename = "RegisterCandidate.aspx";
     protected void Page_Load(object sender, EventArgs e)
     {
+
         if (!IsPostBack)
         {
             setdepartments();
             setdateofbirth();
             setstates();
         }
+       
+
     }
 
     private void setdepartments()
@@ -61,7 +65,8 @@ public partial class Default2 : System.Web.UI.Page
         }
         double SecondaryPercentage = 0;
         double IntermediatePercentage = 0;
-        if ((Convert.ToInt16(SecondaryObtained.Text) < Convert.ToInt16(TotalSecondary.Text))&&(Convert.ToInt16(ObtainedIntermediate.Text) < Convert.ToInt16(TotalIntermediate.Text)))
+        string message = "";
+        if ((Convert.ToInt16(SecondaryObtained.Text) <= Convert.ToInt16(TotalSecondary.Text))&&(Convert.ToInt16(ObtainedIntermediate.Text) <= Convert.ToInt16(TotalIntermediate.Text)))
         {
           
               IntermediatePercentage = (Convert.ToDouble(ObtainedIntermediate.Text) / Convert.ToDouble(TotalIntermediate.Text)) * 100;
@@ -75,6 +80,35 @@ public partial class Default2 : System.Web.UI.Page
             if (temp == null)
             {
                 Candidate_tbl candidate = new Candidate_tbl { Name = Nametxt.Text, Username = Usernametxt.Text, HomeAdress = txtHomeaddress.Text, Stateoforigin = int.Parse(dropdownSto.SelectedValue), LocalGovtArea = int.Parse(dropdownLocalGovtarea.SelectedValue), Email = Emailtxt.Text, DateofBirth = dropdownDay.SelectedItem.Text + "-" + dropdownMonth.SelectedItem.Text + "-" + dropdownyears.SelectedItem.Text, Password = Passwordtxt.Text, Phone = Phonetxt.Text, Image = FileUpload.FileName, Gender = dropdownGender.SelectedValue, ProgrammeID = int.Parse(DropDownprogramme.SelectedValue), CuttoffPoints = TotalCutOff, Status = 0, AdmissionYear = DateTime.Now.Year.ToString() };
+                //// candidate is being stored in db here. 
+                 MembershipCreateStatus createStatus = new MembershipCreateStatus();
+                 MembershipUser newUser = System.Web.Security.Membership.CreateUser(Usernametxt.Text, Passwordtxt.Text, Emailtxt.Text, null, null, true, out createStatus);
+                switch (createStatus)
+                {
+                    case MembershipCreateStatus.Success: message = "The user account was successfully created!";
+                        FormsAuthentication.SetAuthCookie(Usernametxt.Text,true);
+
+                        break;
+
+                    case MembershipCreateStatus.DuplicateUserName: message = "There already exists a user with this username.";
+                      
+                        break;
+                    case MembershipCreateStatus.DuplicateEmail: message = "There already exists a user with this email address.";
+                       
+                        break;
+                    case MembershipCreateStatus.InvalidEmail: message = "There email address you provided in invalid.";
+                      
+                        break;
+                    case MembershipCreateStatus.InvalidAnswer: message = "There security answer was invalid.";
+                      
+                        break;
+                    case MembershipCreateStatus.InvalidPassword: message = "The password you provided is invalid. It must be seven characters long and have at least one non-alphanumeric character.";
+                      
+                        break;
+                    default: message = "There was an unknown error; the user account was NOT created.";
+                       
+                        break;
+                }
 
                 db.AddCandidate(candidate);
                 Response.Redirect("Login.aspx");

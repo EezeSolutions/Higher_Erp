@@ -28,6 +28,7 @@ public partial class _Default : System.Web.UI.Page
         if(HttpContext.Current.Session["userid"]==null){
             return "0";
         }
-        return db.getstudentinboxcount(int.Parse(HttpContext.Current.Session["userid"].ToString())).ToString();
+        //return db.getstudentinboxcount(int.Parse(HttpContext.Current.Session["userid"].ToString())).ToString();
+        return "";
     }
 }

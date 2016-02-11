@@ -39,15 +39,17 @@
               <asp:Label ID="Message" runat="server" Visible="false" Text="Wrong Username or Password" ForeColor="Red"></asp:Label>
              </div>
                   <br />
+              <asp:validationsummary id="valSummary" runat="server" headertext="Validation Errors:" cssclass="ValidationSummary" />
               <br />
                <div class="form-signin mg-btm">
-                  <asp:TextBox ID="username" CssClass="form-control" Placeholder="username" runat="server"></asp:TextBox>
-                  <asp:TextBox ID="password" TextMode="Password" Placeholder="Password" runat="server" CssClass="form-control"></asp:TextBox>
-                  <div class="social-box">
+                  <asp:TextBox ID="username" CssClass="form-control" ValidationGroup="CheckLogin" Placeholder="username" runat="server"></asp:TextBox>
+                   <asp:RequiredFieldValidator ID="UserNameValidator" ValidationGroup="CheckLogin" ControlToValidate="username" runat="server" Display="Dynamic" ErrorMessage="Please enter the user name." ForeColor="Red"></asp:RequiredFieldValidator>
+                  <asp:TextBox ID="password" TextMode="Password" ValidationGroup="CheckLogin" Placeholder="Password" runat="server" CssClass="form-control"></asp:TextBox>
+                  <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="CheckLogin" ControlToValidate="username" runat="server" Display="Dynamic" ErrorMessage="Please enter the password" ForeColor="Red"></asp:RequiredFieldValidator>
+                   <div class="social-box">
                       <div class="row mg-btm">
                           <div class="col-md-12">
-                              <asp:Button ID="btnlogin" runat="server" Text="Login" href="#" OnClick="btnlogin_Click" CssClass="btn login-button btn-block" />
-                                
+                              <asp:Button ID="btnlogin" CausesValidation="true" runat="server" Text="Login" ValidationGroup="CheckLogin" OnClick="btnlogin_Click" CssClass="btn login-button btn-block" />         
                           </div>
                       </div>
 
@@ -55,6 +57,10 @@
                   </div>
                   <div class="loginpage-footer text-center">
                       <a href="#">Forgot your password?</a>
+
+                  </div>
+                  <div class="loginpage-footer text-center">
+                      <a href="Registration.aspx">New User? Register Here</a>
 
                   </div>
                   <p>By signing in or signing up, you agree to our Terms and that you have read our Privacy Policy.</p>

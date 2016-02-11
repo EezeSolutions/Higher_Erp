@@ -308,7 +308,7 @@
                                     <label class="col-sm-2 control-label"> </label>
                                     <div class="col-sm-9">
                                  
-                                        <asp:Button Class="btn btn-block btn-primary" ID="btnRegister" Text="Register" ValidationGroup="addFunds" runat="server" OnClick="btnRegister_Click"/>
+                                        <asp:Button Class="btn btn-block btn-primary" ID="btnRegister" Text="Register"  runat="server" OnClick="btnRegister_Click"/>
                                      
                                     </div>
             </div>
