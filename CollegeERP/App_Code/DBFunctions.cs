@@ -1942,4 +1942,36 @@ db.SaveChanges();
         db = new CollegeERPDBEntities();
         return db.Results_tbl.Where(x=>x.MetricNo==Metricno&&x.ExamType=="Final").GroupBy(x=>x.Semester.Value);
     }
+    public object checkquestionaireexist(int UserID)
+    {
+        db = new CollegeERPDBEntities();
+        return db.UploadedQuestionaires.Where(x => x.SenderID == UserID && x.Status==0).FirstOrDefault();
+    }
+    public void AddQuestionare(UploadedQuestionaire obj)
+    {
+        db = new CollegeERPDBEntities();
+        db.UploadedQuestionaires.Add(obj);
+        db.SaveChanges();
+
+
+    }
+    public List<UploadedQuestionaire> getquestionairlist(int page, int pagesize)
+    {
+        db = new CollegeERPDBEntities();
+        return db.UploadedQuestionaires.OrderByDescending(x => x.ID).Skip(page * pagesize).Take(pagesize).Where(x => x.Status == 0).ToList();
+    }
+    public int getquestionaire_Count()
+    {
+        db = new CollegeERPDBEntities();
+        var tatalques = db.UploadedQuestionaires.Where(x=>x.Status==0).Count();
+        return tatalques;
+    }
+    public void UpdateSuggestionStatus(int UserID)
+    {
+        db = new CollegeERPDBEntities();
+        UploadedQuestionaire usr = db.UploadedQuestionaires.Where(x => x.SenderID == UserID && x.Status == 0).FirstOrDefault();
+        
+            usr.Status = 1;
+        db.SaveChanges();
+    }
 }

@@ -610,6 +610,16 @@
           <Property Name="Day" Type="varchar" MaxLength="50" />
           <Property Name="Teacher" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="UploadedQuestionaire">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SenderID" Type="int" />
+          <Property Name="filepath" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="DateCreated" Type="date" />
+        </EntityType>
         <EntityType Name="Video_Lecture_tbl">
           <Key>
             <PropertyRef Name="ID" />
@@ -1478,6 +1488,18 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UploadedQuestionaire_Candidate_tbl">
+          <End Role="Candidate_tbl" Type="Self.Candidate_tbl" Multiplicity="0..1" />
+          <End Role="UploadedQuestionaire" Type="Self.UploadedQuestionaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidate_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UploadedQuestionaire">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Video_Lecture_tbl_Courses_tbl">
           <End Role="Courses_tbl" Type="Self.Courses_tbl" Multiplicity="0..1" />
           <End Role="Video_Lecture_tbl" Type="Self.Video_Lecture_tbl" Multiplicity="*" />
@@ -1548,6 +1570,7 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
           <EntitySet Name="Support_tbl" EntityType="Self.Support_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeTable_tbl" EntityType="Self.TimeTable_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UploadedQuestionaire" EntityType="Self.UploadedQuestionaire" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Video_Lecture_tbl" EntityType="Self.Video_Lecture_tbl" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AddmissionList_tbl_Batches_table" Association="Self.FK_AddmissionList_tbl_Batches_table">
             <End Role="Batches_table" EntitySet="Batches_table" />
@@ -1833,6 +1856,10 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
             <End Role="Courses_tbl" EntitySet="Courses_tbl" />
             <End Role="TimeTable_tbl" EntitySet="TimeTable_tbl" />
           </AssociationSet>
+          <AssociationSet Name="FK_UploadedQuestionaire_Candidate_tbl" Association="Self.FK_UploadedQuestionaire_Candidate_tbl">
+            <End Role="Candidate_tbl" EntitySet="Candidate_tbl" />
+            <End Role="UploadedQuestionaire" EntitySet="UploadedQuestionaire" />
+          </AssociationSet>
           <AssociationSet Name="FK_Video_Lecture_tbl_Courses_tbl" Association="Self.FK_Video_Lecture_tbl_Courses_tbl">
             <End Role="Courses_tbl" EntitySet="Courses_tbl" />
             <End Role="Video_Lecture_tbl" EntitySet="Video_Lecture_tbl" />
@@ -1976,6 +2003,7 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
           <NavigationProperty Name="CourseFee_tbl" Relationship="CollegeERPDBModel.FK_CourseFee_tbl_Candidate_tbl" FromRole="Candidate_tbl" ToRole="CourseFee_tbl" />
           <NavigationProperty Name="Support_tbl" Relationship="CollegeERPDBModel.FK_Support_tbl_Candidate_tbl" FromRole="Candidate_tbl" ToRole="Support_tbl" />
           <NavigationProperty Name="StudentSelectedCredits" Relationship="CollegeERPDBModel.FK_StudentSelectedCredits_Candidate_tbl" FromRole="Candidate_tbl" ToRole="StudentSelectedCredit" />
+          <NavigationProperty Name="UploadedQuestionaires" Relationship="CollegeERPDBModel.FK_UploadedQuestionaire_Candidate_tbl" FromRole="Candidate_tbl" ToRole="UploadedQuestionaire" />
         </EntityType>
         <EntityType Name="ChatRomMessage_tbl">
           <Key>
@@ -2831,6 +2859,11 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
           <AssociationSet Name="FK_Answers_tbl_Questionaire_tbl" Association="CollegeERPDBModel.FK_Answers_tbl_Questionaire_tbl">
             <End Role="Questionaire_tbl" EntitySet="Questionaire_tbl" />
             <End Role="Answers_tbl" EntitySet="Answers_tbl" />
+          </AssociationSet>
+          <EntitySet Name="UploadedQuestionaires" EntityType="CollegeERPDBModel.UploadedQuestionaire" />
+          <AssociationSet Name="FK_UploadedQuestionaire_Candidate_tbl" Association="CollegeERPDBModel.FK_UploadedQuestionaire_Candidate_tbl">
+            <End Role="Candidate_tbl" EntitySet="Candidate_tbl" />
+            <End Role="UploadedQuestionaire" EntitySet="UploadedQuestionaires" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Hostel_tbl">
@@ -3834,6 +3867,29 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="UploadedQuestionaire">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SenderID" Type="Int32" />
+          <Property Name="filepath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Candidate_tbl" Relationship="CollegeERPDBModel.FK_UploadedQuestionaire_Candidate_tbl" FromRole="UploadedQuestionaire" ToRole="Candidate_tbl" />
+        </EntityType>
+        <Association Name="FK_UploadedQuestionaire_Candidate_tbl">
+          <End Type="CollegeERPDBModel.Candidate_tbl" Role="Candidate_tbl" Multiplicity="0..1" />
+          <End Type="CollegeERPDBModel.UploadedQuestionaire" Role="UploadedQuestionaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidate_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UploadedQuestionaire">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4513,6 +4569,17 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
               <MappingFragment StoreEntitySet="Questionaire_tbl">
                 <ScalarProperty Name="Question" ColumnName="Question" />
                 <ScalarProperty Name="Q_ID" ColumnName="Q_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UploadedQuestionaires">
+            <EntityTypeMapping TypeName="CollegeERPDBModel.UploadedQuestionaire">
+              <MappingFragment StoreEntitySet="UploadedQuestionaire">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="filepath" ColumnName="filepath" />
+                <ScalarProperty Name="SenderID" ColumnName="SenderID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

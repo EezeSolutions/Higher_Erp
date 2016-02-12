@@ -99,10 +99,10 @@ public partial class Default2 : System.Web.UI.Page
         DBFunctions db = new DBFunctions();
         string html = System.IO.File.ReadAllText(Server.MapPath("QuestionarePage.html"));
         Byte[] bytes;
-        html = html.Replace("{QuestionsList}",QuestionareContent);
+        html = html.Replace("{QuestionsList}", QuestionareContent);
 
 
-        
+
         using (var ms = new MemoryStream())
         {
             var doc = new Document();
@@ -122,21 +122,55 @@ public partial class Default2 : System.Web.UI.Page
             }
             doc.Close();
             bytes = ms.ToArray();
-            
-           
+            StringReader s = new StringReader(html);
+
+            Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+
+            PdfWriter.GetInstance(pdfDoc, new FileStream(Request.PhysicalApplicationPath + "/Admin/Questionaire/" + UserID + ".pdf", FileMode.Create));
+
+            HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                PdfWriter writer1 = PdfWriter.GetInstance(pdfDoc, memoryStream);
+                pdfDoc.Open();
+                htmlparser.Parse(s);
+                pdfDoc.Close();
+                bytes = memoryStream.ToArray();
+                memoryStream.Close();
+            }
+
+        }
+        var check = db.checkquestionaireexist(UserID);
+        if (check == null)
+        {
+            UploadedQuestionaire quesobj = new UploadedQuestionaire { SenderID = UserID, filepath = UserID + ".pdf", Status = 0 };
+
+            db.AddQuestionare(quesobj);
+        }
+        else
+        {
+            errorlbl.Visible = true;
         }
         long milliseconds = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) / 1000;
 
 
 
+
         HttpContext.Current.Response.Clear();
         HttpContext.Current.Response.ContentType = "application/pdf";
-        HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment; filename=" + UserID + "_Quesions.pdf");
+        HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment; filename=" + UserID + "_Questions.pdf");
         HttpContext.Current.Response.Buffer = true;
         HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
         HttpContext.Current.Response.BinaryWrite(bytes);
-         
-        db.AddQuestionare(UserID);  
+
+
+
+
+
+        //SubmittedAssignments_tbl sasgmt = new SubmittedAssignments_tbl { StudentID = studenID, AssignmentID = id, AssginmentFile = file, Status = 0, SubmitDate = DateTime.Now.Date };
+        //DBFunctions db = new DBFunctions();
+        //db.submitassignment(sasgmt);
+
         HttpContext.Current.Response.End();
         HttpContext.Current.Response.Close();
        

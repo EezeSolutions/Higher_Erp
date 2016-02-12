@@ -367,6 +367,8 @@ public partial class Candidate_tbl
 
         this.StudentSelectedCredits = new HashSet<StudentSelectedCredit>();
 
+        this.UploadedQuestionaires = new HashSet<UploadedQuestionaire>();
+
     }
 
 
@@ -451,6 +453,8 @@ public partial class Candidate_tbl
     public virtual ICollection<Support_tbl> Support_tbl { get; set; }
 
     public virtual ICollection<StudentSelectedCredit> StudentSelectedCredits { get; set; }
+
+    public virtual ICollection<UploadedQuestionaire> UploadedQuestionaires { get; set; }
 
 }
 
@@ -1667,6 +1671,26 @@ public partial class TimeTable_tbl
 
 
     public virtual Courses_tbl Courses_tbl { get; set; }
+
+}
+
+
+public partial class UploadedQuestionaire
+{
+
+    public int ID { get; set; }
+
+    public Nullable<int> SenderID { get; set; }
+
+    public string filepath { get; set; }
+
+    public Nullable<int> Status { get; set; }
+
+    public Nullable<System.DateTime> DateCreated { get; set; }
+
+
+
+    public virtual Candidate_tbl Candidate_tbl { get; set; }
 
 }
 

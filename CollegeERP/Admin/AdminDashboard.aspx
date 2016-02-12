@@ -79,6 +79,12 @@
                 <span>Notify Active Registration</span>
               </a>
             </div>
+              <div class="col-sm-4">
+              <a href="DownloadReport.aspx" class="main-links">
+                <img src="../images/1-file-manager.jpg">
+                <span>View Questionaire</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>

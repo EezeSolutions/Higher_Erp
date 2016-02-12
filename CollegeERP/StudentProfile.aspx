@@ -101,7 +101,7 @@
                         <td>Email</td>
                         <td><a href=#0"><asp:Label runat="server" ID="Emaillbl"></asp:Label></a></td>
                       </tr>
-                        <td>Phone Number</td>
+                        <td>Phone Numbers</td>
                         <td><asp:Label runat="server" ID="phonenumberlbl"></asp:Label>
                         </td>
                          
