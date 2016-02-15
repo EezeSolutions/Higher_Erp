@@ -48,7 +48,7 @@ public partial class Default2 : System.Web.UI.Page
                     txtAcceptenceFee.Text = program.AcceptenceFee;
                     txtFormCh.Text = program.FormCh;
                     txtFormNum.Text = program.FormNumber;
-                    dropdownPrograms.SelectedValue = program.ProgrameType;
+                    dropdownPrograms.SelectedValue = program.ProgramType;
                     dropdownJamb.SelectedValue = program.HasJambData.ToString();
                     dropdownOlevel.SelectedValue = program.HasOlevelResult.ToString();
                     dropdownPreviousRecord.SelectedValue = program.HasPreviousRecord.ToString();
@@ -76,7 +76,7 @@ public partial class Default2 : System.Web.UI.Page
     {
         DBFunctions db = new DBFunctions();
 
-        Program_tbl prgram = new Program_tbl { ID = id, ProgramName = ProgrammeNametxt.Text, SecondChoice = int.Parse(dropdownSecondChoise.SelectedValue), HasCampus = int.Parse(dropdownCampus.SelectedValue), ApplicationFee = txtApplicationFee.Text, FormNumber = txtFormNum.Text, ProgrameType = dropdownPrograms.SelectedValue, HasJambData = int.Parse(dropdownJamb.SelectedValue), HasBioDataSection = int.Parse(dropdownBioData.SelectedValue), HasPreviousRecord = int.Parse(dropdownPreviousRecord.SelectedValue), HasCBTSchedule = int.Parse(dropdownCbtSchedule.SelectedValue), HasOlevelResult = int.Parse(dropdownOlevel.SelectedValue), Enable = true, DeptID = int.Parse(DropDownDept.SelectedValue), CutoffPoints = Cuttofpointstxt.Text, DateCreated = DateTime.Now.Date, AcceptenceFee = txtAcceptenceFee.Text, FormCh = txtFormCh.Text };
+        Program_tbl prgram = new Program_tbl { ID = id, ProgramName = ProgrammeNametxt.Text, SecondChoice = int.Parse(dropdownSecondChoise.SelectedValue), HasCampus = int.Parse(dropdownCampus.SelectedValue), ApplicationFee = txtApplicationFee.Text, FormNumber = txtFormNum.Text, ProgramType = dropdownPrograms.SelectedValue, HasJambData = int.Parse(dropdownJamb.SelectedValue), HasBioDataSection = int.Parse(dropdownBioData.SelectedValue), HasPreviousRecord = int.Parse(dropdownPreviousRecord.SelectedValue), HasCBTSchedule = int.Parse(dropdownCbtSchedule.SelectedValue), HasOlevelResult = int.Parse(dropdownOlevel.SelectedValue), Enable = true, DeptID = int.Parse(DropDownDept.SelectedValue), CutoffPoints = Cuttofpointstxt.Text, DateCreated = DateTime.Now.Date, AcceptenceFee = txtAcceptenceFee.Text, FormCh = txtFormCh.Text };
         db.updateprogram(prgram);
         Response.Redirect("ManagePrograms.aspx");
 

@@ -40,7 +40,7 @@
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-       <% if(Session["Role"]=="Student") {%>
+       <% if(isSTudent) {%>
        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" class="active"><i class="fa fa-search"></i>Search Features</a></li>
@@ -133,7 +133,7 @@
         <div class="panel-heading">Dpppolyib</div>
         <div class="panel-body">
              <%
-              if (Session["Role"] == "Student")
+              if (isSTudent)
               {%> 
               
                                      <div class="panel panel-default">

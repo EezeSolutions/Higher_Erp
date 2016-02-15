@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -11,12 +12,22 @@ public partial class _Default : System.Web.UI.Page
         int pagesize = 15;
         int page = 1;
         int pagecount = 0;
+        string UserID = "";
+        int StudentID = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
         string pagname = Path.GetFileName(Request.PhysicalPath);
-        if (Session["userid"] != null)
+        if (System.Web.HttpContext.Current.User != null)
         {
-            loadmails();
+            bool LoggedStatus = false;
+            LoggedStatus = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+            if (LoggedStatus)
+            {
+                UserID = Membership.GetUser().ProviderUserKey.ToString();
+                DatabaseFunctions db = new DatabaseFunctions();
+                StudentID = db.GetCandidateID(UserID);
+                loadmails();
+            }
             
         }
         else
@@ -31,6 +42,7 @@ public partial class _Default : System.Web.UI.Page
 
     public void loadmails()
     {
+
         Inboxttbl.Text = "";
         string pagname = Path.GetFileName(Request.PhysicalPath);
         if (Request.QueryString["page"] != null)
@@ -38,8 +50,8 @@ public partial class _Default : System.Web.UI.Page
             page = int.Parse(Request.QueryString["page"]);
         }
         DBFunctions db = new DBFunctions();
-        pagecount = (db.getadusermails_count(int.Parse(Session["userid"].ToString())) + pagesize - 1) / pagesize;
-        var mails = db.getusermails(page - 1, pagesize, int.Parse(Session["userid"].ToString()));
+        pagecount = (db.getadusermails_count(StudentID) + pagesize - 1) / pagesize;
+        var mails = db.getusermails(page - 1, pagesize, StudentID);
 
         foreach (var mail in mails)
         {

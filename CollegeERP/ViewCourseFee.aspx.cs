@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 public partial class _Default : System.Web.UI.Page
 {
+    string UserID = string.Empty;
+    bool loggedStatus = false;
     protected void Page_Load(object sender, EventArgs e)
     {
         string pagename = Path.GetFileName(Request.PhysicalPath);
-
-        if (Session["userid"] != null)
+        
+        if(System.Web.HttpContext.Current.User != null)
         {
-
-            getcoursesfee();
+            UserID = Membership.GetUser().ProviderUserKey.ToString();
+            loggedStatus = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+            if(loggedStatus)
+            {
+                getcoursesfee();
+            }
         }
         else
         {
@@ -27,7 +34,8 @@ public partial class _Default : System.Web.UI.Page
 
     public void getcoursesfee()
     {
-        int sid=int.Parse(Session["userid"].ToString());
+        DatabaseFunctions d = new DatabaseFunctions();
+        int sid= d.GetCandidateID(UserID);
         DBFunctions db = new DBFunctions();
        var coursefeelist= db.getstudentcoursefee(sid);
         foreach(var cf in coursefeelist)

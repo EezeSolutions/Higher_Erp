@@ -446,8 +446,6 @@ public partial class Candidate_tbl
 
     public virtual ICollection<AddmissionLog_tbl> AddmissionLog_tbl { get; set; }
 
-    public virtual Program_tbl Program_tbl { get; set; }
-
     public virtual ICollection<CourseFee_tbl> CourseFee_tbl { get; set; }
 
     public virtual ICollection<Support_tbl> Support_tbl { get; set; }
@@ -455,6 +453,8 @@ public partial class Candidate_tbl
     public virtual ICollection<StudentSelectedCredit> StudentSelectedCredits { get; set; }
 
     public virtual ICollection<UploadedQuestionaire> UploadedQuestionaires { get; set; }
+
+    public virtual Program_tbl Program_tbl { get; set; }
 
 }
 
@@ -898,7 +898,7 @@ public partial class Forms_tbl
 
     public Nullable<int> SectionID { get; set; }
 
-    public Nullable<int> ProgrameID { get; set; }
+    public Nullable<int> ProgramID { get; set; }
 
     public string FormControl { get; set; }
 
@@ -1225,13 +1225,13 @@ public partial class Program_tbl
 
         this.Forms_tbl = new HashSet<Forms_tbl>();
 
-        this.StudentAcceptanceFee_tbl = new HashSet<StudentAcceptanceFee_tbl>();
-
-        this.StudentInfo_tbl = new HashSet<StudentInfo_tbl>();
+        this.OfferedCourses_tbl = new HashSet<OfferedCourses_tbl>();
 
         this.ProgrammeCourses_tbl = new HashSet<ProgrammeCourses_tbl>();
 
-        this.OfferedCourses_tbl = new HashSet<OfferedCourses_tbl>();
+        this.StudentAcceptanceFee_tbl = new HashSet<StudentAcceptanceFee_tbl>();
+
+        this.StudentInfo_tbl = new HashSet<StudentInfo_tbl>();
 
     }
 
@@ -1244,7 +1244,7 @@ public partial class Program_tbl
 
     public string AcceptenceFee { get; set; }
 
-    public string ProgrameType { get; set; }
+    public string ProgramType { get; set; }
 
     public string ProgramName { get; set; }
 
@@ -1274,6 +1274,10 @@ public partial class Program_tbl
 
     public Nullable<int> Semesters { get; set; }
 
+    public Nullable<int> InstantAdmission { get; set; }
+
+    public Nullable<int> Status { get; set; }
+
 
 
     public virtual ICollection<AddmissionList_tbl> AddmissionList_tbl { get; set; }
@@ -1288,13 +1292,13 @@ public partial class Program_tbl
 
     public virtual ICollection<Forms_tbl> Forms_tbl { get; set; }
 
-    public virtual ICollection<StudentAcceptanceFee_tbl> StudentAcceptanceFee_tbl { get; set; }
-
-    public virtual ICollection<StudentInfo_tbl> StudentInfo_tbl { get; set; }
+    public virtual ICollection<OfferedCourses_tbl> OfferedCourses_tbl { get; set; }
 
     public virtual ICollection<ProgrammeCourses_tbl> ProgrammeCourses_tbl { get; set; }
 
-    public virtual ICollection<OfferedCourses_tbl> OfferedCourses_tbl { get; set; }
+    public virtual ICollection<StudentAcceptanceFee_tbl> StudentAcceptanceFee_tbl { get; set; }
+
+    public virtual ICollection<StudentInfo_tbl> StudentInfo_tbl { get; set; }
 
 }
 
@@ -1310,9 +1314,9 @@ public partial class ProgrammeCourses_tbl
 
 
 
-    public virtual Program_tbl Program_tbl { get; set; }
-
     public virtual Courses_tbl Courses_tbl { get; set; }
+
+    public virtual Program_tbl Program_tbl { get; set; }
 
 }
 

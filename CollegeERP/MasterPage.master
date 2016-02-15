@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head runat="server">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,7 +47,7 @@
           
         <li><a href="#" class="active" id="srchbtn"><i class="fa fa-search"></i>Search Features</a></li>
         <li><a href="StudentDashboard.aspx"><i class="fa fa-dashboard "></i>Dashboard</a></li>
-          <li><a href="StudentProfile.aspx"><i class="fa fa-user"></i>My Profile</a></li>
+          <li><a href="ProfilePage.aspx"><i class="fa fa-user"></i>My Profile</a></li>
            <li><a href="Mails.aspx"><i class="fa fa-inbox"></i>Inbox<span class='rednum' id="inboxcount"></span></a></li>
         <li><a href="Logout.aspx"><i class="fa fa-sign-out"></i>Logout</a></li>
       </ul>

@@ -435,7 +435,7 @@
           <Property Name="FormNumber" Type="varchar" MaxLength="50" />
           <Property Name="ApplicationFee" Type="varchar" MaxLength="50" />
           <Property Name="AcceptenceFee" Type="varchar" MaxLength="50" />
-          <Property Name="ProgrameType" Type="varchar" MaxLength="50" />
+          <Property Name="ProgramType" Type="varchar" MaxLength="50" />
           <Property Name="ProgramName" Type="varchar" MaxLength="50" />
           <Property Name="Enable" Type="bit" />
           <Property Name="SecondChoice" Type="int" />
@@ -450,6 +450,8 @@
           <Property Name="DateCreated" Type="date" />
           <Property Name="FormCh" Type="varchar" MaxLength="50" />
           <Property Name="Semesters" Type="int" />
+          <Property Name="InstantAdmission" Type="int" />
+          <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="ProgrammeCourses_tbl">
           <Key>
@@ -1488,18 +1490,6 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UploadedQuestionaire_Candidate_tbl">
-          <End Role="Candidate_tbl" Type="Self.Candidate_tbl" Multiplicity="0..1" />
-          <End Role="UploadedQuestionaire" Type="Self.UploadedQuestionaire" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Candidate_tbl">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UploadedQuestionaire">
-              <PropertyRef Name="SenderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Video_Lecture_tbl_Courses_tbl">
           <End Role="Courses_tbl" Type="Self.Courses_tbl" Multiplicity="0..1" />
           <End Role="Video_Lecture_tbl" Type="Self.Video_Lecture_tbl" Multiplicity="*" />
@@ -1856,10 +1846,6 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
             <End Role="Courses_tbl" EntitySet="Courses_tbl" />
             <End Role="TimeTable_tbl" EntitySet="TimeTable_tbl" />
           </AssociationSet>
-          <AssociationSet Name="FK_UploadedQuestionaire_Candidate_tbl" Association="Self.FK_UploadedQuestionaire_Candidate_tbl">
-            <End Role="Candidate_tbl" EntitySet="Candidate_tbl" />
-            <End Role="UploadedQuestionaire" EntitySet="UploadedQuestionaire" />
-          </AssociationSet>
           <AssociationSet Name="FK_Video_Lecture_tbl_Courses_tbl" Association="Self.FK_Video_Lecture_tbl_Courses_tbl">
             <End Role="Courses_tbl" EntitySet="Courses_tbl" />
             <End Role="Video_Lecture_tbl" EntitySet="Video_Lecture_tbl" />
@@ -1883,8 +1869,8 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
           <NavigationProperty Name="Candidate_tbl" Relationship="Self.FK_AddmissionList_tbl_Candidate_tbl" FromRole="AddmissionList_tbl" ToRole="Candidate_tbl" />
           <Property Name="BatchID" Type="Int32" />
           <NavigationProperty Name="Batches_table" Relationship="CollegeERPDBModel.FK_AddmissionList_tbl_Batches_table" FromRole="AddmissionList_tbl" ToRole="Batches_table" />
-          <NavigationProperty Name="Program_tbl" Relationship="CollegeERPDBModel.FK_AddmissionList_tbl_Program_tbl" FromRole="AddmissionList_tbl" ToRole="Program_tbl" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Program_tbl" Relationship="CollegeERPDBModel.FK_AddmissionList_tbl_Program_tbl" FromRole="AddmissionList_tbl" ToRole="Program_tbl" />
         </EntityType>
         <EntityType Name="AdminMails_tbl">
           <Key>
@@ -1999,11 +1985,11 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
           <NavigationProperty Name="Student_Quizz_Mapping_tbl" Relationship="CollegeERPDBModel.FK_Student_Quizz_Mapping_tbl_Candidate_tbl" FromRole="Candidate_tbl" ToRole="Student_Quizz_Mapping_tbl" />
           <NavigationProperty Name="SubmittedAssignments_tbl" Relationship="CollegeERPDBModel.FK_SubmittedAssignments_tbl_Candidate_tbl" FromRole="Candidate_tbl" ToRole="SubmittedAssignments_tbl" />
           <NavigationProperty Name="AddmissionLog_tbl" Relationship="CollegeERPDBModel.FK_AddmissionLog_tbl_Candidate_tbl" FromRole="Candidate_tbl" ToRole="AddmissionLog_tbl" />
-          <NavigationProperty Name="Program_tbl" Relationship="CollegeERPDBModel.FK_Candidate_tbl_Program_tbl" FromRole="Candidate_tbl" ToRole="Program_tbl" />
           <NavigationProperty Name="CourseFee_tbl" Relationship="CollegeERPDBModel.FK_CourseFee_tbl_Candidate_tbl" FromRole="Candidate_tbl" ToRole="CourseFee_tbl" />
           <NavigationProperty Name="Support_tbl" Relationship="CollegeERPDBModel.FK_Support_tbl_Candidate_tbl" FromRole="Candidate_tbl" ToRole="Support_tbl" />
           <NavigationProperty Name="StudentSelectedCredits" Relationship="CollegeERPDBModel.FK_StudentSelectedCredits_Candidate_tbl" FromRole="Candidate_tbl" ToRole="StudentSelectedCredit" />
           <NavigationProperty Name="UploadedQuestionaires" Relationship="CollegeERPDBModel.FK_UploadedQuestionaire_Candidate_tbl" FromRole="Candidate_tbl" ToRole="UploadedQuestionaire" />
+          <NavigationProperty Name="Program_tbl" Relationship="CollegeERPDBModel.FK_Candidate_tbl_Program_tbl" FromRole="Candidate_tbl" ToRole="Program_tbl" />
         </EntityType>
         <EntityType Name="ChatRomMessage_tbl">
           <Key>
@@ -2139,7 +2125,7 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
           <Property Name="Field" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DataType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="SectionID" Type="Int32" />
-          <Property Name="ProgrameID" Type="Int32" />
+          <Property Name="ProgramID" Type="Int32" />
           <Property Name="FormControl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ControlOptions_tbl" Relationship="Self.FK_ControlOptions_tbl_Forms_tbl" FromRole="Forms_tbl" ToRole="ControlOptions_tbl" />
           <NavigationProperty Name="FormSections_tbl" Relationship="Self.FK_Forms_tbl_FormSections_tbl" FromRole="Forms_tbl" ToRole="FormSections_tbl" />
@@ -2727,44 +2713,7 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
             <End Role="Candidate_tbl" EntitySet="Candidate_tbl" />
             <End Role="AddmissionLog_tbl" EntitySet="AddmissionLog_tbl" />
           </AssociationSet>
-          <EntitySet Name="Program_tbl" EntityType="CollegeERPDBModel.Program_tbl" />
-          <AssociationSet Name="FK_AddmissionList_tbl_Program_tbl" Association="CollegeERPDBModel.FK_AddmissionList_tbl_Program_tbl">
-            <End Role="Program_tbl" EntitySet="Program_tbl" />
-            <End Role="AddmissionList_tbl" EntitySet="AddmissionList_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AddmissionLog_tbl_Program_tbl" Association="CollegeERPDBModel.FK_AddmissionLog_tbl_Program_tbl">
-            <End Role="Program_tbl" EntitySet="Program_tbl" />
-            <End Role="AddmissionLog_tbl" EntitySet="AddmissionLog_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Applications_tbl_Program_tbl" Association="CollegeERPDBModel.FK_Applications_tbl_Program_tbl">
-            <End Role="Program_tbl" EntitySet="Program_tbl" />
-            <End Role="Applications_tbl" EntitySet="Applications_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Candidate_tbl_Program_tbl" Association="CollegeERPDBModel.FK_Candidate_tbl_Program_tbl">
-            <End Role="Program_tbl" EntitySet="Program_tbl" />
-            <End Role="Candidate_tbl" EntitySet="Candidate_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Program_tbl_Department_tbl" Association="CollegeERPDBModel.FK_Program_tbl_Department_tbl">
-            <End Role="Department_tbl" EntitySet="Department_tbl" />
-            <End Role="Program_tbl" EntitySet="Program_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Forms_tbl_Program_tbl" Association="CollegeERPDBModel.FK_Forms_tbl_Program_tbl">
-            <End Role="Program_tbl" EntitySet="Program_tbl" />
-            <End Role="Forms_tbl" EntitySet="Forms_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StudentAcceptanceFee_tbl_Program_tbl" Association="CollegeERPDBModel.FK_StudentAcceptanceFee_tbl_Program_tbl">
-            <End Role="Program_tbl" EntitySet="Program_tbl" />
-            <End Role="StudentAcceptanceFee_tbl" EntitySet="StudentAcceptanceFee_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StudentInfo_tbl_Program_tbl" Association="CollegeERPDBModel.FK_StudentInfo_tbl_Program_tbl">
-            <End Role="Program_tbl" EntitySet="Program_tbl" />
-            <End Role="StudentInfo_tbl" EntitySet="StudentInfo_tbl" />
-          </AssociationSet>
           <EntitySet Name="ProgrammeCourses_tbl" EntityType="CollegeERPDBModel.ProgrammeCourses_tbl" />
-          <AssociationSet Name="FK_ProgrammeCourses_tbl_Program_tbl" Association="CollegeERPDBModel.FK_ProgrammeCourses_tbl_Program_tbl">
-            <End Role="Program_tbl" EntitySet="Program_tbl" />
-            <End Role="ProgrammeCourses_tbl" EntitySet="ProgrammeCourses_tbl" />
-          </AssociationSet>
           <EntitySet Name="Courses_tbl" EntityType="CollegeERPDBModel.Courses_tbl" />
           <AssociationSet Name="FK_Assignments_tbl_Courses_tbl" Association="CollegeERPDBModel.FK_Assignments_tbl_Courses_tbl">
             <End Role="Courses_tbl" EntitySet="Courses_tbl" />
@@ -2827,10 +2776,6 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
             <End Role="Courses_tbl" EntitySet="Courses_tbl" />
             <End Role="OfferedCourses_tbl" EntitySet="OfferedCourses_tbl" />
           </AssociationSet>
-          <AssociationSet Name="FK_OfferedCourses_tbl_Program_tbl" Association="CollegeERPDBModel.FK_OfferedCourses_tbl_Program_tbl">
-            <End Role="Program_tbl" EntitySet="Program_tbl" />
-            <End Role="OfferedCourses_tbl" EntitySet="OfferedCourses_tbl" />
-          </AssociationSet>
           <EntitySet Name="Grades_tbl" EntityType="CollegeERPDBModel.Grades_tbl" />
           <AssociationSet Name="FK_Results_tbl_Grades_tbl" Association="CollegeERPDBModel.FK_Results_tbl_Grades_tbl">
             <End Role="Grades_tbl" EntitySet="Grades_tbl" />
@@ -2864,6 +2809,47 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
           <AssociationSet Name="FK_UploadedQuestionaire_Candidate_tbl" Association="CollegeERPDBModel.FK_UploadedQuestionaire_Candidate_tbl">
             <End Role="Candidate_tbl" EntitySet="Candidate_tbl" />
             <End Role="UploadedQuestionaire" EntitySet="UploadedQuestionaires" />
+          </AssociationSet>
+          <EntitySet Name="Program_tbl" EntityType="CollegeERPDBModel.Program_tbl" />
+          <AssociationSet Name="FK_AddmissionList_tbl_Program_tbl" Association="CollegeERPDBModel.FK_AddmissionList_tbl_Program_tbl">
+            <End Role="Program_tbl" EntitySet="Program_tbl" />
+            <End Role="AddmissionList_tbl" EntitySet="AddmissionList_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AddmissionLog_tbl_Program_tbl" Association="CollegeERPDBModel.FK_AddmissionLog_tbl_Program_tbl">
+            <End Role="Program_tbl" EntitySet="Program_tbl" />
+            <End Role="AddmissionLog_tbl" EntitySet="AddmissionLog_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Applications_tbl_Program_tbl" Association="CollegeERPDBModel.FK_Applications_tbl_Program_tbl">
+            <End Role="Program_tbl" EntitySet="Program_tbl" />
+            <End Role="Applications_tbl" EntitySet="Applications_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Candidate_tbl_Program_tbl" Association="CollegeERPDBModel.FK_Candidate_tbl_Program_tbl">
+            <End Role="Program_tbl" EntitySet="Program_tbl" />
+            <End Role="Candidate_tbl" EntitySet="Candidate_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Program_tbl_Department_tbl" Association="CollegeERPDBModel.FK_Program_tbl_Department_tbl">
+            <End Role="Department_tbl" EntitySet="Department_tbl" />
+            <End Role="Program_tbl" EntitySet="Program_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Forms_tbl_Program_tbl" Association="CollegeERPDBModel.FK_Forms_tbl_Program_tbl">
+            <End Role="Program_tbl" EntitySet="Program_tbl" />
+            <End Role="Forms_tbl" EntitySet="Forms_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OfferedCourses_tbl_Program_tbl" Association="CollegeERPDBModel.FK_OfferedCourses_tbl_Program_tbl">
+            <End Role="Program_tbl" EntitySet="Program_tbl" />
+            <End Role="OfferedCourses_tbl" EntitySet="OfferedCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProgrammeCourses_tbl_Program_tbl" Association="CollegeERPDBModel.FK_ProgrammeCourses_tbl_Program_tbl">
+            <End Role="Program_tbl" EntitySet="Program_tbl" />
+            <End Role="ProgrammeCourses_tbl" EntitySet="ProgrammeCourses_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentAcceptanceFee_tbl_Program_tbl" Association="CollegeERPDBModel.FK_StudentAcceptanceFee_tbl_Program_tbl">
+            <End Role="Program_tbl" EntitySet="Program_tbl" />
+            <End Role="StudentAcceptanceFee_tbl" EntitySet="StudentAcceptanceFee_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentInfo_tbl_Program_tbl" Association="CollegeERPDBModel.FK_StudentInfo_tbl_Program_tbl">
+            <End Role="Program_tbl" EntitySet="Program_tbl" />
+            <End Role="StudentInfo_tbl" EntitySet="StudentInfo_tbl" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Hostel_tbl">
@@ -3360,136 +3346,6 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Program_tbl">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FormNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ApplicationFee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="AcceptenceFee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ProgrameType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ProgramName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Enable" Type="Boolean" />
-          <Property Name="SecondChoice" Type="Int32" />
-          <Property Name="DeptID" Type="Int32" />
-          <Property Name="CutoffPoints" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="HasJambData" Type="Int32" />
-          <Property Name="HasBioDataSection" Type="Int32" />
-          <Property Name="HasOlevelResult" Type="Int32" />
-          <Property Name="HasPreviousRecord" Type="Int32" />
-          <Property Name="HasCBTSchedule" Type="Int32" />
-          <Property Name="HasCampus" Type="Int32" />
-          <Property Name="DateCreated" Type="DateTime" Precision="0" />
-          <Property Name="FormCh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Semesters" Type="Int32" />
-          <NavigationProperty Name="AddmissionList_tbl" Relationship="CollegeERPDBModel.FK_AddmissionList_tbl_Program_tbl" FromRole="Program_tbl" ToRole="AddmissionList_tbl" />
-          <NavigationProperty Name="AddmissionLog_tbl" Relationship="CollegeERPDBModel.FK_AddmissionLog_tbl_Program_tbl" FromRole="Program_tbl" ToRole="AddmissionLog_tbl" />
-          <NavigationProperty Name="Applications_tbl" Relationship="CollegeERPDBModel.FK_Applications_tbl_Program_tbl" FromRole="Program_tbl" ToRole="Applications_tbl" />
-          <NavigationProperty Name="Candidate_tbl" Relationship="CollegeERPDBModel.FK_Candidate_tbl_Program_tbl" FromRole="Program_tbl" ToRole="Candidate_tbl" />
-          <NavigationProperty Name="Department_tbl" Relationship="CollegeERPDBModel.FK_Program_tbl_Department_tbl" FromRole="Program_tbl" ToRole="Department_tbl" />
-          <NavigationProperty Name="Forms_tbl" Relationship="CollegeERPDBModel.FK_Forms_tbl_Program_tbl" FromRole="Program_tbl" ToRole="Forms_tbl" />
-          <NavigationProperty Name="StudentAcceptanceFee_tbl" Relationship="CollegeERPDBModel.FK_StudentAcceptanceFee_tbl_Program_tbl" FromRole="Program_tbl" ToRole="StudentAcceptanceFee_tbl" />
-          <NavigationProperty Name="StudentInfo_tbl" Relationship="CollegeERPDBModel.FK_StudentInfo_tbl_Program_tbl" FromRole="Program_tbl" ToRole="StudentInfo_tbl" />
-          <NavigationProperty Name="ProgrammeCourses_tbl" Relationship="CollegeERPDBModel.FK_ProgrammeCourses_tbl_Program_tbl" FromRole="Program_tbl" ToRole="ProgrammeCourses_tbl" />
-          <NavigationProperty Name="OfferedCourses_tbl" Relationship="CollegeERPDBModel.FK_OfferedCourses_tbl_Program_tbl" FromRole="Program_tbl" ToRole="OfferedCourses_tbl" />
-        </EntityType>
-        <Association Name="FK_AddmissionList_tbl_Program_tbl">
-          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
-          <End Type="CollegeERPDBModel.AddmissionList_tbl" Role="AddmissionList_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Program_tbl">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="AddmissionList_tbl">
-              <PropertyRef Name="ProgrameID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AddmissionLog_tbl_Program_tbl">
-          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="1" />
-          <End Type="CollegeERPDBModel.AddmissionLog_tbl" Role="AddmissionLog_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Program_tbl">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="AddmissionLog_tbl">
-              <PropertyRef Name="ProgramID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Applications_tbl_Program_tbl">
-          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
-          <End Type="CollegeERPDBModel.Applications_tbl" Role="Applications_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Program_tbl">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Applications_tbl">
-              <PropertyRef Name="ProgrameID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Candidate_tbl_Program_tbl">
-          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
-          <End Type="CollegeERPDBModel.Candidate_tbl" Role="Candidate_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Program_tbl">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Candidate_tbl">
-              <PropertyRef Name="ProgrammeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Program_tbl_Department_tbl">
-          <End Type="CollegeERPDBModel.Department_tbl" Role="Department_tbl" Multiplicity="0..1" />
-          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department_tbl">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Program_tbl">
-              <PropertyRef Name="DeptID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Forms_tbl_Program_tbl">
-          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
-          <End Type="CollegeERPDBModel.Forms_tbl" Role="Forms_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Program_tbl">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Forms_tbl">
-              <PropertyRef Name="ProgrameID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StudentAcceptanceFee_tbl_Program_tbl">
-          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
-          <End Type="CollegeERPDBModel.StudentAcceptanceFee_tbl" Role="StudentAcceptanceFee_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Program_tbl">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="StudentAcceptanceFee_tbl">
-              <PropertyRef Name="ProgramID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StudentInfo_tbl_Program_tbl">
-          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
-          <End Type="CollegeERPDBModel.StudentInfo_tbl" Role="StudentInfo_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Program_tbl">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="StudentInfo_tbl">
-              <PropertyRef Name="ProgramID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ProgrammeCourses_tbl">
           <Key>
             <PropertyRef Name="ID" />
@@ -3497,21 +3353,9 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProgramID" Type="Int32" />
           <Property Name="CourseID" Type="Int32" />
-          <NavigationProperty Name="Program_tbl" Relationship="CollegeERPDBModel.FK_ProgrammeCourses_tbl_Program_tbl" FromRole="ProgrammeCourses_tbl" ToRole="Program_tbl" />
           <NavigationProperty Name="Courses_tbl" Relationship="CollegeERPDBModel.FK_ProgrammeCourses_tbl_Courses_tbl" FromRole="ProgrammeCourses_tbl" ToRole="Courses_tbl" />
+          <NavigationProperty Name="Program_tbl" Relationship="CollegeERPDBModel.FK_ProgrammeCourses_tbl_Program_tbl" FromRole="ProgrammeCourses_tbl" ToRole="Program_tbl" />
         </EntityType>
-        <Association Name="FK_ProgrammeCourses_tbl_Program_tbl">
-          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
-          <End Type="CollegeERPDBModel.ProgrammeCourses_tbl" Role="ProgrammeCourses_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Program_tbl">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ProgrammeCourses_tbl">
-              <PropertyRef Name="ProgramID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Courses_tbl">
           <Key>
             <PropertyRef Name="ID" />
@@ -3731,18 +3575,6 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OfferedCourses_tbl_Program_tbl">
-          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
-          <End Type="CollegeERPDBModel.OfferedCourses_tbl" Role="OfferedCourses_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Program_tbl">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="OfferedCourses_tbl">
-              <PropertyRef Name="ProgrammeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Grades_tbl">
           <Key>
             <PropertyRef Name="ID" />
@@ -3887,6 +3719,162 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
             </Principal>
             <Dependent Role="UploadedQuestionaire">
               <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Program_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ApplicationFee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AcceptenceFee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProgramType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProgramName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Enable" Type="Boolean" />
+          <Property Name="SecondChoice" Type="Int32" />
+          <Property Name="DeptID" Type="Int32" />
+          <Property Name="CutoffPoints" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HasJambData" Type="Int32" />
+          <Property Name="HasBioDataSection" Type="Int32" />
+          <Property Name="HasOlevelResult" Type="Int32" />
+          <Property Name="HasPreviousRecord" Type="Int32" />
+          <Property Name="HasCBTSchedule" Type="Int32" />
+          <Property Name="HasCampus" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="0" />
+          <Property Name="FormCh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Semesters" Type="Int32" />
+          <Property Name="InstantAdmission" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <NavigationProperty Name="AddmissionList_tbl" Relationship="CollegeERPDBModel.FK_AddmissionList_tbl_Program_tbl" FromRole="Program_tbl" ToRole="AddmissionList_tbl" />
+          <NavigationProperty Name="AddmissionLog_tbl" Relationship="CollegeERPDBModel.FK_AddmissionLog_tbl_Program_tbl" FromRole="Program_tbl" ToRole="AddmissionLog_tbl" />
+          <NavigationProperty Name="Applications_tbl" Relationship="CollegeERPDBModel.FK_Applications_tbl_Program_tbl" FromRole="Program_tbl" ToRole="Applications_tbl" />
+          <NavigationProperty Name="Candidate_tbl" Relationship="CollegeERPDBModel.FK_Candidate_tbl_Program_tbl" FromRole="Program_tbl" ToRole="Candidate_tbl" />
+          <NavigationProperty Name="Department_tbl" Relationship="CollegeERPDBModel.FK_Program_tbl_Department_tbl" FromRole="Program_tbl" ToRole="Department_tbl" />
+          <NavigationProperty Name="Forms_tbl" Relationship="CollegeERPDBModel.FK_Forms_tbl_Program_tbl" FromRole="Program_tbl" ToRole="Forms_tbl" />
+          <NavigationProperty Name="OfferedCourses_tbl" Relationship="CollegeERPDBModel.FK_OfferedCourses_tbl_Program_tbl" FromRole="Program_tbl" ToRole="OfferedCourses_tbl" />
+          <NavigationProperty Name="ProgrammeCourses_tbl" Relationship="CollegeERPDBModel.FK_ProgrammeCourses_tbl_Program_tbl" FromRole="Program_tbl" ToRole="ProgrammeCourses_tbl" />
+          <NavigationProperty Name="StudentAcceptanceFee_tbl" Relationship="CollegeERPDBModel.FK_StudentAcceptanceFee_tbl_Program_tbl" FromRole="Program_tbl" ToRole="StudentAcceptanceFee_tbl" />
+          <NavigationProperty Name="StudentInfo_tbl" Relationship="CollegeERPDBModel.FK_StudentInfo_tbl_Program_tbl" FromRole="Program_tbl" ToRole="StudentInfo_tbl" />
+        </EntityType>
+        <Association Name="FK_AddmissionList_tbl_Program_tbl">
+          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
+          <End Type="CollegeERPDBModel.AddmissionList_tbl" Role="AddmissionList_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AddmissionList_tbl">
+              <PropertyRef Name="ProgrameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AddmissionLog_tbl_Program_tbl">
+          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="1" />
+          <End Type="CollegeERPDBModel.AddmissionLog_tbl" Role="AddmissionLog_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AddmissionLog_tbl">
+              <PropertyRef Name="ProgramID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Applications_tbl_Program_tbl">
+          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
+          <End Type="CollegeERPDBModel.Applications_tbl" Role="Applications_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Applications_tbl">
+              <PropertyRef Name="ProgrameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Candidate_tbl_Program_tbl">
+          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
+          <End Type="CollegeERPDBModel.Candidate_tbl" Role="Candidate_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Candidate_tbl">
+              <PropertyRef Name="ProgrammeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Program_tbl_Department_tbl">
+          <End Type="CollegeERPDBModel.Department_tbl" Role="Department_tbl" Multiplicity="0..1" />
+          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Program_tbl">
+              <PropertyRef Name="DeptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Forms_tbl_Program_tbl">
+          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
+          <End Type="CollegeERPDBModel.Forms_tbl" Role="Forms_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Forms_tbl">
+              <PropertyRef Name="ProgramID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OfferedCourses_tbl_Program_tbl">
+          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
+          <End Type="CollegeERPDBModel.OfferedCourses_tbl" Role="OfferedCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OfferedCourses_tbl">
+              <PropertyRef Name="ProgrammeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProgrammeCourses_tbl_Program_tbl">
+          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
+          <End Type="CollegeERPDBModel.ProgrammeCourses_tbl" Role="ProgrammeCourses_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProgrammeCourses_tbl">
+              <PropertyRef Name="ProgramID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentAcceptanceFee_tbl_Program_tbl">
+          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
+          <End Type="CollegeERPDBModel.StudentAcceptanceFee_tbl" Role="StudentAcceptanceFee_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentAcceptanceFee_tbl">
+              <PropertyRef Name="ProgramID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentInfo_tbl_Program_tbl">
+          <End Type="CollegeERPDBModel.Program_tbl" Role="Program_tbl" Multiplicity="0..1" />
+          <End Type="CollegeERPDBModel.StudentInfo_tbl" Role="StudentInfo_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program_tbl">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StudentInfo_tbl">
+              <PropertyRef Name="ProgramID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4129,7 +4117,7 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
                 <ScalarProperty Name="Field" ColumnName="Field" />
                 <ScalarProperty Name="DataType" ColumnName="DataType" />
                 <ScalarProperty Name="SectionID" ColumnName="SectionID" />
-                <ScalarProperty Name="ProgrameID" ColumnName="ProgrameID" />
+                <ScalarProperty Name="ProgramID" ColumnName="ProgrameID" />
                 <ScalarProperty Name="FormControl" ColumnName="FormControl" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4462,31 +4450,6 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Program_tbl">
-            <EntityTypeMapping TypeName="CollegeERPDBModel.Program_tbl">
-              <MappingFragment StoreEntitySet="Program_tbl">
-                <ScalarProperty Name="Semesters" ColumnName="Semesters" />
-                <ScalarProperty Name="FormCh" ColumnName="FormCh" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="HasCampus" ColumnName="HasCampus" />
-                <ScalarProperty Name="HasCBTSchedule" ColumnName="HasCBTSchedule" />
-                <ScalarProperty Name="HasPreviousRecord" ColumnName="HasPreviousRecord" />
-                <ScalarProperty Name="HasOlevelResult" ColumnName="HasOlevelResult" />
-                <ScalarProperty Name="HasBioDataSection" ColumnName="HasBioDataSection" />
-                <ScalarProperty Name="HasJambData" ColumnName="HasJambData" />
-                <ScalarProperty Name="CutoffPoints" ColumnName="CutoffPoints" />
-                <ScalarProperty Name="DeptID" ColumnName="DeptID" />
-                <ScalarProperty Name="SecondChoice" ColumnName="SecondChoice" />
-                <ScalarProperty Name="Enable" ColumnName="Enable" />
-                <ScalarProperty Name="ProgramName" ColumnName="ProgramName" />
-                <ScalarProperty Name="ProgrameType" ColumnName="ProgrameType" />
-                <ScalarProperty Name="AcceptenceFee" ColumnName="AcceptenceFee" />
-                <ScalarProperty Name="ApplicationFee" ColumnName="ApplicationFee" />
-                <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProgrammeCourses_tbl">
             <EntityTypeMapping TypeName="CollegeERPDBModel.ProgrammeCourses_tbl">
               <MappingFragment StoreEntitySet="ProgrammeCourses_tbl">
@@ -4579,6 +4542,33 @@ warning 6035: The relationship 'FK_Results_tbl_AddmissionList_tbl' has columns t
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="filepath" ColumnName="filepath" />
                 <ScalarProperty Name="SenderID" ColumnName="SenderID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Program_tbl">
+            <EntityTypeMapping TypeName="CollegeERPDBModel.Program_tbl">
+              <MappingFragment StoreEntitySet="Program_tbl">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="InstantAdmission" ColumnName="InstantAdmission" />
+                <ScalarProperty Name="Semesters" ColumnName="Semesters" />
+                <ScalarProperty Name="FormCh" ColumnName="FormCh" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="HasCampus" ColumnName="HasCampus" />
+                <ScalarProperty Name="HasCBTSchedule" ColumnName="HasCBTSchedule" />
+                <ScalarProperty Name="HasPreviousRecord" ColumnName="HasPreviousRecord" />
+                <ScalarProperty Name="HasOlevelResult" ColumnName="HasOlevelResult" />
+                <ScalarProperty Name="HasBioDataSection" ColumnName="HasBioDataSection" />
+                <ScalarProperty Name="HasJambData" ColumnName="HasJambData" />
+                <ScalarProperty Name="CutoffPoints" ColumnName="CutoffPoints" />
+                <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+                <ScalarProperty Name="SecondChoice" ColumnName="SecondChoice" />
+                <ScalarProperty Name="Enable" ColumnName="Enable" />
+                <ScalarProperty Name="ProgramName" ColumnName="ProgramName" />
+                <ScalarProperty Name="ProgramType" ColumnName="ProgramType" />
+                <ScalarProperty Name="AcceptenceFee" ColumnName="AcceptenceFee" />
+                <ScalarProperty Name="ApplicationFee" ColumnName="ApplicationFee" />
+                <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

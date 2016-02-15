@@ -127,8 +127,6 @@ public partial class CollegeERPDBEntities : DbContext
 
     public virtual DbSet<AddmissionLog_tbl> AddmissionLog_tbl { get; set; }
 
-    public virtual DbSet<Program_tbl> Program_tbl { get; set; }
-
     public virtual DbSet<ProgrammeCourses_tbl> ProgrammeCourses_tbl { get; set; }
 
     public virtual DbSet<Courses_tbl> Courses_tbl { get; set; }
@@ -146,6 +144,8 @@ public partial class CollegeERPDBEntities : DbContext
     public virtual DbSet<Questionaire_tbl> Questionaire_tbl { get; set; }
 
     public virtual DbSet<UploadedQuestionaire> UploadedQuestionaires { get; set; }
+
+    public virtual DbSet<Program_tbl> Program_tbl { get; set; }
 
 }
 

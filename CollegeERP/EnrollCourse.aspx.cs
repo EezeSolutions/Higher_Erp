@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -11,30 +12,41 @@ public partial class _Default : System.Web.UI.Page
 {
     public static int Credits = 0;
     public static int TotalCredits = 0;
-    
+    string Userid = "";
+    static int uid = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
         
             string pagename = Path.GetFileName(Request.PhysicalPath);
-            if (!IsPostBack)
+            bool loggedStatus = false;
+            if (System.Web.HttpContext.Current.User != null)
             {
-                if (Session["userid"] != null)
+                if (!IsPostBack)
                 {
-                    DBFunctions db = new DBFunctions();
-                    int uid = int.Parse(HttpContext.Current.Session["userid"].ToString());
-                    
-                    StudentInfo_tbl temp = db.getstdentinfo(uid);
-                   
-                    StudentSelectedCredit obj = db.getStudentCredits(uid).FirstOrDefault();
-                    if (obj != null)
+                    loggedStatus = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+                    if (loggedStatus)
                     {
-                        Credits = Convert.ToInt16(obj.SelectedCourseCount);
+                        DBFunctions db = new DBFunctions();
+                        DatabaseFunctions d = new DatabaseFunctions();
+                        Userid = Membership.GetUser().ProviderUserKey.ToString();
+                        uid = d.GetCandidateID(Userid);
+                        //  loadprogrammes();
+
+                        StudentInfo_tbl temp = db.getstdentinfo(uid);
+
+                        StudentSelectedCredit obj = db.getStudentCredits(uid).FirstOrDefault();
+                        if (obj != null)
+                        {
+                            Credits = Convert.ToInt16(obj.SelectedCourseCount);
+                        }
+
+                        getcourses();
+
                     }
-                    getcourses();
-                }
-                else
-                {
-                    Response.Redirect("Login.aspx?Redirecturl=" + pagename);
+                    else
+                    {
+                        Response.Redirect("Login.aspx?Redirecturl=" + pagename);
+                    }
                 }
             }
       //  dropdownCourse.DataSource=
@@ -51,11 +63,11 @@ public partial class _Default : System.Web.UI.Page
     
     }
 
-    [WebMethod(EnableSession=true)]
+    [WebMethod]
     public static string EnrollCourse(string[] cid, int credithours)
     {
         string result = "";
-        int uid = int.Parse(HttpContext.Current.Session["userid"].ToString());
+        
         DBFunctions db = new DBFunctions();
         for (int i = 0; i < cid.Length;i++)
         {
@@ -91,7 +103,7 @@ public partial class _Default : System.Web.UI.Page
     protected void dropdownstatus_SelectedIndexChanged(object sender, EventArgs e)
     {
         int flag = -1;
-        int candidate = int.Parse(Session["userid"].ToString());
+        int candidate = uid;
         coursetablelbl.Text = "";
         DBFunctions db = new DBFunctions();
 
@@ -138,7 +150,9 @@ public partial class _Default : System.Web.UI.Page
 
     public void getcourses()
     {
-        int candidate = int.Parse(Session["userid"].ToString());
+        DatabaseFunctions d = new DatabaseFunctions();
+        int User = d.GetCandidateID(Userid);
+        int candidate = User;
         DBFunctions db = new DBFunctions();
 
         List<OfferedCourses_tbl> courses = db.getstudenoffercourses(candidate);
@@ -165,4 +179,7 @@ public partial class _Default : System.Web.UI.Page
 
     
     }
+
+
+
 }

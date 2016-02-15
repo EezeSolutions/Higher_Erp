@@ -23,7 +23,8 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 //  loadprogrammes();
                 if (!IsPostBack)
                 {
-                    int status=db.GetAdmissionStatus(Userid);
+                    int uid = db.GetCandidateID(Userid);
+                    int status=db.GetAdmissionStatus(uid);
                     if(status==0)
                     {
                         isSTudent = false;

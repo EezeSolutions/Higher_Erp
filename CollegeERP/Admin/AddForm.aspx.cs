@@ -67,7 +67,7 @@ public partial class Default2 : System.Web.UI.Page
     {
 
         DBFunctions db = new DBFunctions();
-        Forms_tbl form = new Forms_tbl { Field = Field, DataType = Data, ProgrameID = int.Parse(Program), SectionID = int.Parse(Section), FormControl = cont };
+        Forms_tbl form = new Forms_tbl { Field = Field, DataType = Data, ProgramID = int.Parse(Program), SectionID = int.Parse(Section), FormControl = cont };
         db.addFormField(form,options);
 
         return "done";

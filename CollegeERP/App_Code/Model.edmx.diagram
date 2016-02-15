@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b5c53805e4be4adab1f2611ec0cb6c35" Name="Diagram1" ZoomLevel="73">
+      <Diagram DiagramId="b5c53805e4be4adab1f2611ec0cb6c35" Name="Diagram1" ZoomLevel="77">
         <EntityTypeShape EntityType="CollegeERPDBModel.AddmissionList_tbl" Width="1.5" PointX="7.5" PointY="20.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CollegeERPDBModel.AdminMails_tbl" Width="1.5" PointX="7.5" PointY="24.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CollegeERPDBModel.Answers_tbl" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
@@ -96,17 +96,7 @@
         <EntityTypeShape EntityType="CollegeERPDBModel.AddmissionLog_tbl" Width="1.5" PointX="15.75" PointY="16.25" />
         <AssociationConnector Association="CollegeERPDBModel.FK_AddmissionLog_tbl_Applications_tbl" />
         <AssociationConnector Association="CollegeERPDBModel.FK_AddmissionLog_tbl_Candidate_tbl" />
-        <EntityTypeShape EntityType="CollegeERPDBModel.Program_tbl" Width="1.5" PointX="3" PointY="15.75" />
-        <AssociationConnector Association="CollegeERPDBModel.FK_AddmissionList_tbl_Program_tbl" />
-        <AssociationConnector Association="CollegeERPDBModel.FK_AddmissionLog_tbl_Program_tbl" />
-        <AssociationConnector Association="CollegeERPDBModel.FK_Applications_tbl_Program_tbl" />
-        <AssociationConnector Association="CollegeERPDBModel.FK_Candidate_tbl_Program_tbl" />
-        <AssociationConnector Association="CollegeERPDBModel.FK_Program_tbl_Department_tbl" />
-        <AssociationConnector Association="CollegeERPDBModel.FK_Forms_tbl_Program_tbl" />
-        <AssociationConnector Association="CollegeERPDBModel.FK_StudentAcceptanceFee_tbl_Program_tbl" />
-        <AssociationConnector Association="CollegeERPDBModel.FK_StudentInfo_tbl_Program_tbl" />
         <EntityTypeShape EntityType="CollegeERPDBModel.ProgrammeCourses_tbl" Width="1.5" PointX="10.5" PointY="24.75" />
-        <AssociationConnector Association="CollegeERPDBModel.FK_ProgrammeCourses_tbl_Program_tbl" />
         <EntityTypeShape EntityType="CollegeERPDBModel.Courses_tbl" Width="1.5" PointX="5.25" PointY="33.625" />
         <AssociationConnector Association="CollegeERPDBModel.FK_Assignments_tbl_Courses_tbl" />
         <AssociationConnector Association="CollegeERPDBModel.FK_Attendance_tbl_Courses_tbl" />
@@ -124,7 +114,6 @@
         <EntityTypeShape EntityType="CollegeERPDBModel.OfferedCourses_tbl" Width="1.5" PointX="10.5" PointY="30.875" />
         <AssociationConnector Association="CollegeERPDBModel.FK_OfferedCourses_tbl_Batches_table" />
         <AssociationConnector Association="CollegeERPDBModel.FK_OfferedCourses_tbl_Courses_tbl" />
-        <AssociationConnector Association="CollegeERPDBModel.FK_OfferedCourses_tbl_Program_tbl" />
         <EntityTypeShape EntityType="CollegeERPDBModel.Grades_tbl" Width="1.5" PointX="5.375" PointY="0.875" />
         <AssociationConnector Association="CollegeERPDBModel.FK_Results_tbl_Grades_tbl" />
         <EntityTypeShape EntityType="CollegeERPDBModel.Leave" Width="1.5" PointX="8.25" PointY="4.375" />
@@ -138,6 +127,17 @@
         <AssociationConnector Association="CollegeERPDBModel.FK_Answers_tbl_Questionaire_tbl" />
         <EntityTypeShape EntityType="CollegeERPDBModel.UploadedQuestionaire" Width="1.5" PointX="7.5" PointY="53.5" />
         <AssociationConnector Association="CollegeERPDBModel.FK_UploadedQuestionaire_Candidate_tbl" />
+        <EntityTypeShape EntityType="CollegeERPDBModel.Program_tbl" Width="1.5" PointX="3" PointY="15.5" />
+        <AssociationConnector Association="CollegeERPDBModel.FK_AddmissionList_tbl_Program_tbl" />
+        <AssociationConnector Association="CollegeERPDBModel.FK_AddmissionLog_tbl_Program_tbl" />
+        <AssociationConnector Association="CollegeERPDBModel.FK_Applications_tbl_Program_tbl" />
+        <AssociationConnector Association="CollegeERPDBModel.FK_Candidate_tbl_Program_tbl" />
+        <AssociationConnector Association="CollegeERPDBModel.FK_Program_tbl_Department_tbl" />
+        <AssociationConnector Association="CollegeERPDBModel.FK_Forms_tbl_Program_tbl" />
+        <AssociationConnector Association="CollegeERPDBModel.FK_OfferedCourses_tbl_Program_tbl" />
+        <AssociationConnector Association="CollegeERPDBModel.FK_ProgrammeCourses_tbl_Program_tbl" />
+        <AssociationConnector Association="CollegeERPDBModel.FK_StudentAcceptanceFee_tbl_Program_tbl" />
+        <AssociationConnector Association="CollegeERPDBModel.FK_StudentInfo_tbl_Program_tbl" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

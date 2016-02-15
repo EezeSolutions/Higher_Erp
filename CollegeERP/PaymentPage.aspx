@@ -112,9 +112,9 @@
      <input name="cust_name" type="hidden" value="<%= this.completeName %>" /> 
      <input name="cust_name_desc" type="hidden" value="Customer Name" /> 
 
-     <input name="xml_data" type="hidden" value='<payment_item_detail>
+       <input name="xml_data" type="hidden" value='<payment_item_detail>
 <item_details detail_ref="<%=this.tnx_ref %>" college="The Polytechnic, Ibadan" department="" faculty="">
-<item_detail item_id="1" item_name="<%= this.paymentType %>" item_amt="<%= this.feeamount %>" bank_id="9" acct_num="0120598847" />
+<item_detail item_id="1" item_name="<%= this.paymentType %>" item_amt="<%= this.feeamount %>" bank_id="16" acct_num="0120598847" />
 <asp:Literal runat="server" ID="literaladdComission"></asp:Literal>
 </item_details>
 

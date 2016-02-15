@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -11,6 +12,7 @@ public partial class Default2 : System.Web.UI.Page
     int pagesize = 5;
     int page = 1;
     int pagecount = 0;
+    string UserID = string.Empty;
     protected void Page_Load(object sender, EventArgs e)
     {
         
@@ -24,51 +26,59 @@ public partial class Default2 : System.Web.UI.Page
             {
                 Response.Redirect("DiscussionTopic.aspx");
             }
-            if (Session["userid"] != null)
+            if (System.Web.HttpContext.Current.User != null)
             {
-                pageing.Text = "";
-                
-               
-                    
-                        loaddiscussions(topicid);
-                        DBFunctions db = new DBFunctions();
-                        pagecount = (db.getdiscussionbytopiccount(topicid) + pagesize - 1) / pagesize;
-                        if (Request.QueryString["page"]!=null)
+                UserID = Membership.GetUser().ProviderUserKey.ToString();
+                bool LoggedStatus = false;
+                LoggedStatus = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+                if (LoggedStatus)
+                {
+                    pageing.Text = "";
+
+                    loaddiscussions(topicid);
+                    DBFunctions db = new DBFunctions();
+                    pagecount = (db.getdiscussionbytopiccount(topicid) + pagesize - 1) / pagesize;
+                    if (Request.QueryString["page"] != null)
+                    {
+                        page = int.Parse(Request.QueryString["page"].ToString());
+                    }
+                    if (pagecount > 1)
+                        for (int i = 1; i <= pagecount; i++)
                         {
-                           page= int.Parse(Request.QueryString["page"].ToString());
-                        }
-                            if (pagecount > 1)
-                            for (int i = 1; i <= pagecount; i++)
+
+                            if (i != page)
                             {
-                                
-                                if (i != page)
-                                {
-                                    pageing.Text += "<li class=''><a style='background: #f0f0f0;height:30px;width:30px' href='" + pagename + "?topicid=" + topicid + "&";
-                                    pageing.Text += "page=" + i + "'>" + i + "</a><li>";
-                                }
-                                else
-                                {
-                                    pageing.Text += "<li><a href='#0'>"+i.ToString()+"</a></li>";
-                                }
+                                pageing.Text += "<li class=''><a style='background: #f0f0f0;height:30px;width:30px' href='" + pagename + "?topicid=" + topicid + "&";
+                                pageing.Text += "page=" + i + "'>" + i + "</a><li>";
                             }
-                    
-                
+                            else
+                            {
+                                pageing.Text += "<li><a href='#0'>" + i.ToString() + "</a></li>";
+                            }
+                        }
+
+
+                }
+                else
+                {
+                    if (topicid != -1)
+                        Response.Redirect("Login.aspx?Redirecturl=" + pagename + "?topicid=" + topicid);
+                    else
+                    {
+                        Response.Redirect("Login.aspx?Redirecturl=" + pagename);
+                    }
+                }
             }
             else
             {
-                if(topicid!=-1)
-                    Response.Redirect("Login.aspx?Redirecturl=" + pagename + "?topicid=" + topicid);
-                else
-                {
-                    Response.Redirect("Login.aspx?Redirecturl=" + pagename);
-                }
+                Response.Redirect("Login.aspx?Redirecturl=" + pagename);
             }
-        
     }
     protected void submitcommentbtn_Click(object sender, EventArgs e)
     {
         DBFunctions db = new DBFunctions();
-        Discussions_tbl dis = new Discussions_tbl { userID = int.Parse(Session["userid"].ToString()), Discission = commenttxt.InnerText, TopicID = int.Parse(Request.QueryString["topicid"].ToString()), Date = DateTime.Now };
+        DatabaseFunctions d = new DatabaseFunctions();
+        Discussions_tbl dis = new Discussions_tbl { userID = d.GetCandidateID(UserID), Discission = commenttxt.InnerText, TopicID = int.Parse(Request.QueryString["topicid"].ToString()), Date = DateTime.Now };
         dis= db.adddiscussion(dis);
         //discusion.Text += "<div class='comment-name'><img src='images//" + Session["Image"] + "' height='50px' width='50px'> <span class='h4 '>" + Session["Name"] + "</span></div><br>";
         //discusion.Text += "<p class='blockquote comment'> " + dis.Discission + "</p><br>";

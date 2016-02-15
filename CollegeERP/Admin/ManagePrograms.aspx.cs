@@ -18,7 +18,7 @@ public partial class Default2 : System.Web.UI.Page
             List<Program_tbl> programs = db.getprogramslist();
             foreach (Program_tbl prg in programs)
             {
-                programstbl.Text += "<tr><td>" + prg.ProgramName + "</td><td>" + prg.ProgrameType + "</td><td>" + prg.Department_tbl.Department + "</td><td>" + prg.ApplicationFee + "</td><td>" + prg.AcceptenceFee + "</td><td>";
+                programstbl.Text += "<tr><td>" + prg.ProgramName + "</td><td>" + prg.ProgramType + "</td><td>" + prg.Department_tbl.Department + "</td><td>" + prg.ApplicationFee + "</td><td>" + prg.AcceptenceFee + "</td><td>";
 
                 if (prg.Enable == true)
                 {
@@ -53,7 +53,7 @@ public partial class Default2 : System.Web.UI.Page
     {
         DBFunctions db = new DBFunctions();
         
-        Program_tbl prgram = new Program_tbl { ProgramName = ProgrammeNametxt.Text, SecondChoice = int.Parse(dropdownSecondChoise.SelectedValue), HasCampus = int.Parse(dropdownCampus.SelectedValue), ApplicationFee = txtApplicationFee.Text, FormNumber = txtFormCh.Text, ProgrameType = dropdownPrograms.SelectedValue, HasJambData = int.Parse(dropdownJamb.SelectedValue), HasBioDataSection = int.Parse(dropdownBioData.SelectedValue), HasPreviousRecord = int.Parse(dropdownPreviousRecord.SelectedValue), HasCBTSchedule = int.Parse(dropdownCbtSchedule.SelectedValue), HasOlevelResult = int.Parse(dropdownOlevel.SelectedValue), Enable = true, DeptID = int.Parse(DropDownDept.SelectedValue), CutoffPoints = Cuttofpointstxt.Text, DateCreated = DateTime.Now.Date,AcceptenceFee=txtAcceptenceFee.Text,FormCh=txtFormCh.Text };
+        Program_tbl prgram = new Program_tbl { ProgramName = ProgrammeNametxt.Text, SecondChoice = int.Parse(dropdownSecondChoise.SelectedValue), HasCampus = int.Parse(dropdownCampus.SelectedValue), ApplicationFee = txtApplicationFee.Text, FormNumber = txtFormCh.Text, ProgramType = dropdownPrograms.SelectedValue, HasJambData = int.Parse(dropdownJamb.SelectedValue), HasBioDataSection = int.Parse(dropdownBioData.SelectedValue), HasPreviousRecord = int.Parse(dropdownPreviousRecord.SelectedValue), HasCBTSchedule = int.Parse(dropdownCbtSchedule.SelectedValue), HasOlevelResult = int.Parse(dropdownOlevel.SelectedValue), Enable = true, DeptID = int.Parse(DropDownDept.SelectedValue), CutoffPoints = Cuttofpointstxt.Text, DateCreated = DateTime.Now.Date,AcceptenceFee=txtAcceptenceFee.Text,FormCh=txtFormCh.Text };
 
         db.addprogramme(prgram);
     }

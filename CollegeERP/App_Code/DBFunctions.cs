@@ -30,13 +30,13 @@ public class DBFunctions
 
        }
 
-       public void AddCandidate(Candidate_tbl candidate)
+       public int AddCandidate(Candidate_tbl candidate)
        {
            db = new CollegeERPDBEntities();
            
                db.Candidate_tbl.Add(candidate);
                db.SaveChanges();
-
+               return candidate.ID;
            
        }
        public void AddQuestionare(int UserID)
@@ -109,7 +109,7 @@ public class DBFunctions
        {
            using (db = new CollegeERPDBEntities())
            {
-               var program = db.Forms_tbl.Where(x=>x.ProgrameID==programid).ToList();
+               var program = db.Forms_tbl.Where(x=>x.ProgramID==programid).ToList();
                return program;
            }
        
@@ -223,7 +223,11 @@ public class DBFunctions
     public Program_tbl getstudentprogram(int candidateid)
     {
         db=new CollegeERPDBEntities();
-        var program = db.AddmissionList_tbl.Where(x=>x.UserID==candidateid).FirstOrDefault().Program_tbl;
+
+        var programid = db.AddmissionList_tbl.Where(x => x.UserID == candidateid).FirstOrDefault();
+        int prg = Convert.ToInt16(programid.ProgrameID);
+
+        var program = db.Program_tbl.Where(x => x.ID == prg).FirstOrDefault();
 
         return program;
     }

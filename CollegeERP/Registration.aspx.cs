@@ -25,9 +25,10 @@ public partial class Registration : System.Web.UI.Page
                 DatabaseFunctions db = new DatabaseFunctions();
                 DBFunctions d = new DBFunctions();
                 int i=db.insertUserOtherInfo(Usernametxt.Text, Phonetxt.Text, newUser.ProviderUserKey.ToString(),0);
-                d.AddCandidate(candidate);
+                int CandidateID=d.AddCandidate(candidate);
                 if(i!=-1)
                 {
+                    db.InsertMappindIDs(newUser.ProviderUserKey.ToString(),CandidateID);
                     Response.Redirect("ProfilePage.aspx");
                 }
                 break;

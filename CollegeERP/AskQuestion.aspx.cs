@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -13,140 +14,150 @@ public partial class Default2 : System.Web.UI.Page
     int pageSize = 5;
     int totalRecords = 0;
     int totalPages = 0;
-
+    string UserID = string.Empty;
     
     protected void Page_Load(object sender, EventArgs e)
     {
         string pagename = Path.GetFileName(Request.PhysicalPath);
         DBFunctions db = new DBFunctions();
-        if (Session["userid"] != null)
+        bool LoggedStatus = false;
+        if (System.Web.HttpContext.Current.User != null)
         {
-            int pageStart = 1;
-            int pageEnd = 5;
-            if (Request.QueryString.ToString().Contains("page"))
+            LoggedStatus = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+            if (LoggedStatus)
             {
-                page = Convert.ToInt32(Request.QueryString["page"].ToString());
-                pageEnd = pageSize * page;
-                pageStart = (pageEnd - pageSize) + 1;
-            }
-
-
-            List<Support_tbl> ds = new List<Support_tbl>();
-
-            int userid = int.Parse(Session["userid"].ToString());
-            ds = db.getQuestionlist(userid, page-1, pageSize);
-
-
-            literalStart.Text = pageStart.ToString();
-            literalEnd.Text = pageEnd.ToString();
-
-            int tmpPageEnd = 0;
-            tmpPageEnd = pageEnd;
-
-            pageEnd = db.getQuestion_Count(userid);
-
-
-
-            if (pageEnd > 5)
-            {
-                literalTotal.Text = pageEnd.ToString();
-
-                int pagett = 0;
-                pagett = Convert.ToInt16(literalEnd.Text);
-
-                if (pagett > pageEnd)
+                UserID = Membership.GetUser().ProviderUserKey.ToString();
+                int pageStart = 1;
+                int pageEnd = 5;
+                if (Request.QueryString.ToString().Contains("page"))
                 {
+                    page = Convert.ToInt32(Request.QueryString["page"].ToString());
+                    pageEnd = pageSize * page;
+                    pageStart = (pageEnd - pageSize) + 1;
+                }
+
+
+                List<Support_tbl> ds = new List<Support_tbl>();
+                DatabaseFunctions d = new DatabaseFunctions();
+                int userid = d.GetCandidateID(UserID);
+                ds = db.getQuestionlist(userid, page - 1, pageSize);
+
+
+                literalStart.Text = pageStart.ToString();
+                literalEnd.Text = pageEnd.ToString();
+
+                int tmpPageEnd = 0;
+                tmpPageEnd = pageEnd;
+
+                pageEnd = db.getQuestion_Count(userid);
+
+
+
+                if (pageEnd > 5)
+                {
+                    literalTotal.Text = pageEnd.ToString();
+
+                    int pagett = 0;
+                    pagett = Convert.ToInt16(literalEnd.Text);
+
+                    if (pagett > pageEnd)
+                    {
+                        literalEnd.Text = pageEnd.ToString();
+                    }
+
+                }
+                else
+                {
+                    if (pageEnd == 0)
+                    {
+                        literalStart.Text = "";
+                    }
+                    literalTotal.Text = pageEnd.ToString();
                     literalEnd.Text = pageEnd.ToString();
                 }
 
+
+                string tmpUrl = string.Empty;
+                tmpUrl = "AddDateSheet.aspx?" + Request.QueryString.ToString();
+                if (tmpUrl.Contains("?page"))
+                {
+                    tmpUrl = tmpUrl.Remove(tmpUrl.IndexOf("?page"));
+                }
+
+                StringBuilder listingString = new StringBuilder();
+
+                if (ds != null)
+                {
+                    loadQuestion(ds);
+                }
+
+
+                if (pageEnd > 5)
+                {
+                    StringBuilder paging = new StringBuilder();
+                    int counterPage = 1;
+                    int totalPages = 1;
+
+                    totalPages = (pageEnd / 5) + 1;
+                    string urlMain = string.Empty;
+                    urlMain = Request.Url.ToString();
+                    if (urlMain.Contains("?page"))
+                    {
+                        urlMain = urlMain.Remove(urlMain.IndexOf("?page"));
+                    }
+
+                    for (int i = 1; i <= totalPages; i++)
+                    {
+                        string newPageString = string.Empty;
+
+
+                        if (i == 1)
+                        {
+
+                            newPageString = "<li><a aria-label=\"First\"  href=\"" + urlMain + "\" >&lt;&lt;</a></li>";
+                            if (page == i)
+                            {
+                                newPageString += "<li><a style=\"color:#000000;background: #f0f0f0;\" href=\"" + urlMain + "?page=" + i + "\" >" + i + "</a></li>";
+                            }
+                            else
+                            {
+                                newPageString += "<li><a href=\"" + urlMain + "?page=" + i + "\" >" + i + "</a></li>";
+                            }
+
+                        }
+                        else if (i == totalPages)
+                        {
+                            if (page == i)
+                            {
+                                newPageString += "<li><a style=\"color:#000000;background: #f0f0f0;\" href=\"" + urlMain + "?page=" + i + "\" >" + i + "</a></li>";
+                            }
+                            else
+                            {
+                                newPageString += "<li><a  href=\"" + urlMain + "?page=" + i + "\" >" + i + "</a></li>";
+                            }
+                            newPageString += "<li><a aria-label=\"Last\" href=\"" + urlMain + "?page=" + totalPages + "\" >&gt;&gt;</a></li>";
+                        }
+                        else
+                        {
+                            if (page == i)
+                            {
+                                newPageString += "<li><a style=\"color:#000000;background: #f0f0f0;\" href=\"" + urlMain + "?page=" + i + "\" >" + i + "</a></li>";
+                            }
+                            else
+                            {
+                                newPageString += "<li><a href=\"" + urlMain + "?page=" + i + "\" >" + i + "</a></li>";
+                            }
+                        }
+                        counterPage++;
+                        paging.Append(newPageString);
+                    }
+
+                    literalPaging.Text = paging.ToString();
+                }
             }
             else
             {
-                if (pageEnd == 0)
-                {
-                    literalStart.Text = "";
-                }
-                literalTotal.Text = pageEnd.ToString();
-                literalEnd.Text = pageEnd.ToString();
-            }
-
-
-            string tmpUrl = string.Empty;
-            tmpUrl = "AddDateSheet.aspx?" + Request.QueryString.ToString();
-            if (tmpUrl.Contains("?page"))
-            {
-                tmpUrl = tmpUrl.Remove(tmpUrl.IndexOf("?page"));
-            }
-
-            StringBuilder listingString = new StringBuilder();
-
-            if (ds != null)
-            {
-                loadQuestion(ds);
-            }
-
-
-            if (pageEnd > 5)
-            {
-                StringBuilder paging = new StringBuilder();
-                int counterPage = 1;
-                int totalPages = 1;
-
-                totalPages = (pageEnd / 5) + 1;
-                string urlMain = string.Empty;
-                urlMain = Request.Url.ToString();
-                if (urlMain.Contains("?page"))
-                {
-                    urlMain = urlMain.Remove(urlMain.IndexOf("?page"));
-                }
-
-                for (int i = 1; i <= totalPages; i++)
-                {
-                    string newPageString = string.Empty;
-
-
-                    if (i == 1)
-                    {
-
-                        newPageString = "<li><a aria-label=\"First\"  href=\"" + urlMain + "\" >&lt;&lt;</a></li>";
-                        if (page == i)
-                        {
-                            newPageString += "<li><a style=\"color:#000000;background: #f0f0f0;\" href=\"" + urlMain + "?page=" + i + "\" >" + i + "</a></li>";
-                        }
-                        else
-                        {
-                            newPageString += "<li><a href=\"" + urlMain + "?page=" + i + "\" >" + i + "</a></li>";
-                        }
-
-                    }
-                    else if (i == totalPages)
-                    {
-                        if (page == i)
-                        {
-                            newPageString += "<li><a style=\"color:#000000;background: #f0f0f0;\" href=\"" + urlMain + "?page=" + i + "\" >" + i + "</a></li>";
-                        }
-                        else
-                        {
-                            newPageString += "<li><a  href=\"" + urlMain + "?page=" + i + "\" >" + i + "</a></li>";
-                        }
-                        newPageString += "<li><a aria-label=\"Last\" href=\"" + urlMain + "?page=" + totalPages + "\" >&gt;&gt;</a></li>";
-                    }
-                    else
-                    {
-                        if (page == i)
-                        {
-                            newPageString += "<li><a style=\"color:#000000;background: #f0f0f0;\" href=\"" + urlMain + "?page=" + i + "\" >" + i + "</a></li>";
-                        }
-                        else
-                        {
-                            newPageString += "<li><a href=\"" + urlMain + "?page=" + i + "\" >" + i + "</a></li>";
-                        }
-                    }
-                    counterPage++;
-                    paging.Append(newPageString);
-                }
-
-                literalPaging.Text = paging.ToString();
+                Response.Redirect("Login.aspx?Redirecturl=" + pagename);
             }
         }
         else
@@ -201,7 +212,8 @@ public partial class Default2 : System.Web.UI.Page
     {
        
         DBFunctions db = new DBFunctions();
-        Support_tbl spt = new Support_tbl { UserID = int.Parse(Session["userid"].ToString()), Question = SenderQuestion.Text, Date = DateTime.Now,Status=0 };
+        DatabaseFunctions d = new DatabaseFunctions();
+        Support_tbl spt = new Support_tbl { UserID = d.GetCandidateID(UserID), Question = SenderQuestion.Text, Date = DateTime.Now,Status=0 };
         db.addQuestion(spt);
         Response.Redirect("AskQuestion.aspx");
     }
