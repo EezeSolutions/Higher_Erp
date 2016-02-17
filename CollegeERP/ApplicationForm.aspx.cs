@@ -1683,6 +1683,8 @@ public partial class ApplicationForm : System.Web.UI.Page
                         d.AssignAcceptanceFee(StudentID, programID, 0);
                         ///// Generate acceptance fee and send a message. 
                         double AcceptanceFee = d.GetAcceptanceFeeForProgram(programID);
+                        ///// Update Admission Status to 1 . 
+                    
                         if(AcceptanceFee!=-1)
                         {
                             string Message = "Acceptence Fee Of " +AcceptanceFee+ " Has Been Assigned to You <br> Please Submit This Fees with in One Week";

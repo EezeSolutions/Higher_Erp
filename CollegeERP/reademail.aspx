@@ -20,8 +20,8 @@
             <br />
             <br />
             
-                <a href="Mails.aspx" class="btn btn-default fa fa-inbox">Back To Inbox</a>
-            
+                <a href="Mails.aspx" class="btn btn-info fa fa-inbox">Back To Inbox</a>
+                <asp:Literal ID="FeeButton" runat="server"></asp:Literal>
                  </div>
 
             </div>

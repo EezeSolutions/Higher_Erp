@@ -1,0 +1,27 @@
+<br /> <table cellpadding="0" style="border:solid 2px #7e7e7e; padding:3px;" cellspacing="0" border="1" width="100%">
+        	<tr>
+            	<th bgcolor="#843c0c" style="color:#FFF; font-size:8px; padding:7px; text-align:left;"><strong>JAMB DATA</strong></th>
+            </tr>
+            <tr>
+            	<td style="border:solid 2px #7e7e7e; padding:3px;">
+                	<table cellpadding="5" cellspacing="0" border="1" width="100%" style="font-weight:bold; font-size:6px; border:solid 2px #7e7e7e;">
+                    	<tr bgcolor="#FFFFCC">
+                        	<td>JAMB REG # : {JambRegNo}</td>
+                           <td>UTME 2015 CHOICE OF POLYTECHNIC : {polychoice}</td>
+                        </tr>
+						<tr  bgcolor="#FFFFCC">
+						<td>UTME 2015 SUBJECTS & SCORES : {JAMBCOURSEINFO}</td>
+						</tr>
+						<tr bgcolor="#FFFFCC">
+					    <td colspan="2">UTME 2015 TOTAL SCORE : {totalScore}</td> 
+					</tr>
+						
+                    </table>
+					
+					</td>
+            </tr>
+ </table>
+ 
+
+  
+ <br />

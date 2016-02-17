@@ -25,13 +25,21 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 {
                     int uid = db.GetCandidateID(Userid);
                     int status=db.GetAdmissionStatus(uid);
-                    if(status==0)
+                    int CheckRegno = -1;
+                    string FormNumber = "";
+                    FormNumber = db.getFormumber();
+                    if(FormNumber!="")
                     {
-                        isSTudent = false;
-                    }
-                    else if(status==1)
-                    {
-                        isSTudent = true;
+                        CheckRegno = db.CheckAdmission(FormNumber);
+                        if (CheckRegno == -1 || CheckRegno==0)
+                        {
+                            isSTudent = false;
+                        }
+                        else if (CheckRegno > 0)
+                        {
+                            isSTudent = true;
+                        }
+
                     }
                 }
 

@@ -19,7 +19,7 @@
             <br />
             <br />
             
-                <a href="AdminInbox.aspx" class="btn btn-default fa fa-inbox">Back To Inbox</a>
+                <a href="AdminInbox.aspx" class="btn btn-success fa fa-inbox">Back To Inbox</a>
             
                  </div>
 

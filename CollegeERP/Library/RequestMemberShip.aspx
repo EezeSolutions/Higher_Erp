@@ -34,7 +34,7 @@
         <div class="form-group">
              <label class="col-sm-3 control-label"></label>
              <div class="col-sm-9">
-      <asp:Button ID="Requestbtn" CssClass="btn btn-brown btn-block" runat="server" OnClick="Requestbtn_Click" Text="Send Request"/>
+      <asp:Button ID="Requestbtn" CssClass="btn btn-info btn-block" runat="server" OnClick="Requestbtn_Click" Text="Send Request"/>
       
     </div>
   </div>

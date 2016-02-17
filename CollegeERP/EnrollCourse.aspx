@@ -55,7 +55,7 @@
         </div>
     <script type="text/javascript">
         var TotalSelected = parseInt('<%=Credits%>');
-        alert(TotalSelected)
+       
         var AllowedCredits = 18;
         var CourcesArray = new Array();
         $(document).ready(function () {

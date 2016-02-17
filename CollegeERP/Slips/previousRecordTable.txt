@@ -1,0 +1,35 @@
+<table cellpadding="0" style="border:solid 2px #7e7e7e; padding:3px;" cellspacing="0" border="1" width="100%">
+        	<tr>
+            	<th bgcolor="#843c0c" style="color:#FFF; font-size:8px; padding:8px; text-align:left;"><strong>PREVIOUS ACADEMIC RECORD</strong></th>
+            </tr>
+            <tr>
+            	<td style="border:solid 2px #7e7e7e; padding:3px;">
+                	<table cellpadding="5" cellspacing="0" border="1" width="100%" style="font-weight:bold; font-size:6px; border:solid 2px #7e7e7e;">
+                    	<tr bgcolor="#FFFFCC">
+                        	<td >FULL NAME : {jambfullname}</td>
+							<td >JAMB REG NO : {jambregno}</td>							                        
+							
+                        </tr>
+						<tr bgcolor="#FFFFCC">
+                        	<td>INSTITUTION : {institution}</td>
+								<td>JAMB YEAR : {jambyear}</td>
+                        </tr>
+							<tr bgcolor="#FFFFCC">
+                        	<td>COURSE NAME : {coursename_jamb}</td>
+							<td>COURSE TYPE : {coursetype_jamb}</td>
+                        </tr>
+						<tr bgcolor="#FFFFCC">
+						<td >COURSE GRADE : {coursegrade_jamb}</td>
+												<td >YEAR COMPLETED : {yearcompleted}</td>
+						</tr>
+                        <tr bgcolor="#FFFFCC">
+                            <td  >TRAINING PERIOD : {trainingperiod_jamb}</td>
+                            <td>ND MATRIC # : {formerMatricNumber}</td>
+                        </tr>
+                       
+                       
+                    </table>
+					</td>
+            </tr>
+ </table>
+<br />

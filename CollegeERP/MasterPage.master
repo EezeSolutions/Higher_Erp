@@ -152,7 +152,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" class="active"><i class="fa fa-search"></i>Search Features</a></li>
         <li><a href="ProgramApplication.aspx"><i class="fa fa-dashboard "></i>Dashboard</a></li>
-          <li><a href="StudentProfile.aspx"><i class="fa fa-user"></i>My Profile</a></li>
+          <li><a href="ProfilePage.aspx"><i class="fa fa-user"></i>My Profile</a></li>
            <li><a href="Mails.aspx"><i class="fa fa-inbox"></i>Inbox<span class='rednum' id="inboxcount"></span></a></li>
         <li><a href="Logout.aspx"><i class="fa fa-sign-out"></i>Logout</a></li>
       </ul>
@@ -198,7 +198,7 @@
     
     <div class="footer">
   <div class="container">
-    <p>&copy; Copyright all Reserved 2000-2016</p>
+    <p></p>
   </div>
 </div>
          

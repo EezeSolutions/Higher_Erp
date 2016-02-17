@@ -541,7 +541,7 @@
                                                         <br />
                                                         <br />
                                                         <div class="form-group">
-
+                                                            
                                                             <div class="col-lg-6">
 
                                                                 <label class="col-sm-4 control-label">State of Origin</label>
@@ -559,7 +559,8 @@
                                                                 </div>
 
                                                             </div>
-
+                                                                <div class="col-lg-6">
+                                                                </div>
 
                                                             <div class="col-lg-6">
 
@@ -604,7 +605,7 @@
                                                                 <div class="col-sm-8">
 
                                                                     <img id="imgDisplay" runat="server" style="width: 200px; height: 100px; display: none" alt="" src="" />
-                                                                    <asp:Image ID="imgLoader" runat="server" ImageUrl="~/Images/loader.gif" />
+                                                                    <asp:Image ID="imgLoader" runat="server" ImageUrl="~/images/loader.gif" />
 
                                                                 </div>
                                                             </div>
@@ -2268,9 +2269,9 @@
                                                         <br />
                                                 <div class="row">
                                                    
-                                                    <div class="form-group" style="font-size:large" >
+                                                    <div class="form-group" style="font-size:large;margin-left: 12px;margin-right: 12px" >
 
-                                                            <div class="col-lg-12" style="background-color:lightgrey">
+                                                            <div class="col-lg-12" style="background-color:#293a4a;COLOR:WHITE;height: 33px;">
 
                                                                 <label class="col-sm-3 control-label">Registration No :</label>
                                                                 <div class="col-sm-8">
@@ -2320,9 +2321,9 @@
                                                   <asp:Panel runat="server" ID="panelpreview_PreviousRecord" Visible="true">
                                                  
 
-                                                    <div class="form-group" style="font-size:large" >
+                                                    <div class="form-group" style="font-size:large;margin-left: 12px;margin-right: 12px" >
 
-                                                            <div class="col-lg-12" style="background-color:lightgrey">
+                                                            <div class="col-lg-12" style="background-color:#293a4a;COLOR:WHITE;height: 33px;">
 
                                                                 <label class="col-sm-12 control-label">Previous Academic Record</label>
                                                                 
@@ -2478,9 +2479,9 @@
 
 
                                                       </asp:Panel>
-                                                       <div class="form-group" style="font-size:large" >
+                                                       <div class="form-group" style="font-size:large;margin-left: 12px;margin-right: 12px" >
 
-                                                            <div class="col-lg-12" style="background-color:lightgrey">
+                                                            <div class="col-lg-12" style="background-color:#293a4a;COLOR:WHITE;height: 33px;">
 
                                                                 <label class="col-sm-12 control-label">CBT Schedule</label>
                                                                 
@@ -2545,13 +2546,13 @@
 
                                                 <div class="col-sm-3">
 
-                                                    <asp:Button runat="server" Visible="true" OnClick="Button1_Click" ID="Button1" Width="150px" CssClass="btn btn-brown" Text="Edit Application" />
+                                                    <asp:Button runat="server" Visible="true" OnClick="Button1_Click" ID="Button1" Width="150px" CssClass="btn btn-info" Text="Edit Application" />
 
                                                 </div>
 
                                                 <div class="col-sm-3">
 
-                                                    <asp:Button runat="server" Visible="true" OnClick="btnSubmit_Click" ID="btnSubmit" Width="150px"  CssClass="btn btn-brown" Text="Submit Application" />
+                                                    <asp:Button runat="server" Visible="true" OnClick="btnSubmit_Click" ID="btnSubmit" Width="150px"  CssClass="btn btn-success" Text="Submit Application" />
                                                      
 
                                                 </div>

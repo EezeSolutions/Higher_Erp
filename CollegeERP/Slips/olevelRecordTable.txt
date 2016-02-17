@@ -1,0 +1,43 @@
+<br /> <table cellpadding="0" style="border:solid 2px #7e7e7e; padding:3px;" cellspacing="0" border="1" width="100%">
+        	<tr>
+            	<th bgcolor="#843c0c" style="color:#FFF; font-size:8px; padding:8px; text-align:left;"><strong>O'LEVEL RESULT (WAEC, NECO, NABTEB)</strong></th>
+            </tr>
+            <tr>
+            	<td style="border:solid 2px #7e7e7e; padding:3px;">
+                	<table cellpadding="5" cellspacing="0" border="1" width="100%" style="font-weight:bold; font-size:6px; border:solid 2px #7e7e7e;">
+                    	<tr>
+					<th>O'LEVEL FIRST SITTING</th>
+					<th>O'LEVEL SECOND SITTING</th>
+					</tr>
+						<tr bgcolor="#FFFFCC">
+                        	<td>EXAM : {exam_olevel}</td>
+							<td>EXAM : {exam_olevel2}</td>
+                           
+                        </tr>
+						<tr bgcolor="#FFFFCC">
+						 <td>EXAM NUMBER : {examnumber_olevel}</td>
+						 <td>EXAM NUMBER : {examnumber_olevel2}</td>
+						</tr>
+                        <tr bgcolor="#FFFFCC">
+                        	<td>EXAM MONTH : {exammonth_olevel}</td>
+							<td>EXAM MONTH : {exammonth_olevel2}</td>
+
+                        </tr>
+						<tr  bgcolor="#FFFFCC">
+						<td>EXAM YEAR : {examyear_olevel}</td>
+						<td>EXAM YEAR : {examyear_olevel2}</td>
+						</tr>
+						
+							<tr  bgcolor="#FFFFCC">
+					<td> {info_course1_sitting}</td>  <td>{info_course1_2sitting}</td>
+					</tr>
+
+						
+                    </table>
+					
+					</td>
+            </tr>
+ </table>
+ 
+ 
+ <br />
