@@ -378,3 +378,23 @@ body {
 	margin: 0 0 30px 0;
 	font-size: 24px;
 }
+table.user-profile img { width:80px} 
+table th, table td { padding:5px;}
+table th{ background: #293a4a   ; color:#FFF; }
+table tr:hover { background:#F9F9F9;}
+.dashboard, table tr:nth-child(odd) { background:#FFF;}
+.inner {min-height:800px; padding:20px;}
+
+.list-group-item label { float: left; width: 18%;}
+.paymentoptions img { max-width: 100%;}
+.paymentoptions label { margin: 10px 0 10px; display: block}
+.errorpage, .uc { padding:60px 0; text-align:center;}
+.errorpage big { font-size:72px; padding:15px 0; display:block;}
+.errorpage small { font-size:28px;}
+.Pager{
+    margin:0px auto;
+    text-align:center;
+}
+.user-profile{
+    border:none;
+}

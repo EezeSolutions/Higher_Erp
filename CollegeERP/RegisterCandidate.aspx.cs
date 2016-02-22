@@ -167,16 +167,16 @@ public partial class Default2 : System.Web.UI.Page
     //        {
     //            if (AsyncFileUpload1.FileContent.Length < 2000000)
     //            {
-    //                String savePath = MapPath("~/Students/profilePics/" + AsyncFileUpload1.FileName);
+    //                String savePath = MapPath("profilePics/" + AsyncFileUpload1.FileName);
 
     //                string formnum = "";
 
-    //                string origPath = MapPath("~/Students/profilePics/" + formnum + ".jpg");
+    //                string origPath = MapPath("profilePics/" + formnum + ".jpg");
     //                AsyncFileUpload1.SaveAs(origPath);
     //                // File.AppendAllText("C:/lg.txt", "\r\n"+savePath);
     //                AsyncFileUpload1.SaveAs(savePath);
 
-    //                var image = new Bitmap(MapPath("~/Students/profilePics/" + formnum + ".jpg"));
+    //                var image = new Bitmap(MapPath("profilePics/" + formnum + ".jpg"));
     //                if (image.Height > 200 || image.Width > 200)
     //                {
     //                    Console.Write("IMAGE DIMENSION LARGE PROCESSING IMAGE");
@@ -198,7 +198,7 @@ public partial class Default2 : System.Web.UI.Page
 
     //                // AsyncFileUpload1.SaveAs(MapPath("C:/AdmissionPortal/Students/profilePics/" + AsyncFileUpload1.FileName));
     //                //   literealErrorImage.Text = "";
-    //                UploadFolderPath = "~/Students/profilePics/";
+    //                UploadFolderPath = "profilePics/";
     //                ViewState["imageDisplay_str"] = formnum + "." + fileExtension;
     //            }
     //            else

@@ -1682,9 +1682,14 @@ public partial class ApplicationForm : System.Web.UI.Page
                         DatabaseFunctions d = new DatabaseFunctions();
                         d.AssignAcceptanceFee(StudentID, programID, 0);
                         ///// Generate acceptance fee and send a message. 
+                        d.InsertIntoStudentInfoTableNew(programID, "ND1", StudentID, 0, 1, "0", DateTime.Now.Year.ToString());
+                        int BatchID = d.GetBatchID(DateTime.Now.Year.ToString());
+                        string matricno=DateTime.Now.Year+"-"+programName+"-"+StudentID;
+                        d.InsertIntoAddmissionTableNew(programID, StudentID, 0, "Merit", matricno, BatchID);
                         double AcceptanceFee = d.GetAcceptanceFeeForProgram(programID);
                         ///// Update Admission Status to 1 . 
-                    
+                        ///// Insert Values to StudentInfo_tbl and AddmissionList (New One) 
+
                         if(AcceptanceFee!=-1)
                         {
                             string Message = "Acceptence Fee Of " +AcceptanceFee+ " Has Been Assigned to You <br> Please Submit This Fees with in One Week";

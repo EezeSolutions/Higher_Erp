@@ -1,5 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head runat="server">
@@ -62,14 +64,16 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+   
     <div class="container">
   <div class="row">
     <div class="col-sm-3">
-      <div class="panel panel-default">
+      <div class="panel panel-default" >
         <div class="panel-heading">Dpppolyib</div>
         <div class="panel-body">
         
      <div class="panel panel-default">
+        
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" href="#collapse1" style="font-size:12px">ADMISSION/ENROLMENT MANAGEMENT </a>
@@ -88,8 +92,7 @@
     </div>
        
 
-
-              
+                   
         
                              <div class="panel panel-default">
       <div class="panel-heading">
@@ -134,7 +137,7 @@
              
              else if(!isSTudent) {%>
 
-                <nav class="navbar navbar-default">
+             <nav class="navbar navbar-default">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -150,35 +153,92 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" class="active"><i class="fa fa-search"></i>Search Features</a></li>
+          
+        <li><a href="#" class="active" id="srchbtn"><i class="fa fa-search"></i>Search Features</a></li>
         <li><a href="ProgramApplication.aspx"><i class="fa fa-dashboard "></i>Dashboard</a></li>
           <li><a href="ProfilePage.aspx"><i class="fa fa-user"></i>My Profile</a></li>
            <li><a href="Mails.aspx"><i class="fa fa-inbox"></i>Inbox<span class='rednum' id="inboxcount"></span></a></li>
         <li><a href="Logout.aspx"><i class="fa fa-sign-out"></i>Logout</a></li>
       </ul>
+        <div class="col-sm-2 pull-right">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q" id="seachtab">
+                    
+                </div>
+            </form>
+        </div>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
     <div class="container">
   <div class="row">
     <div class="col-sm-3">
-      <div class="panel panel-default">
+      <div class="panel panel-default" style="opacity:0.6;pointer-events:none" id="ControlledDiv" >
         <div class="panel-heading">Dpppolyib</div>
         <div class="panel-body">
+        
+     <div class="panel panel-default">
+        
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a id="check" data-toggle="collapse" href="#collapse1" style="font-size:12px">ADMISSION/ENROLMENT MANAGEMENT </a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse active">
+        <ul class="list-group">
+          <li class="list-group-item"><a href="EnrollCourse.aspx">Enroll Courses</a></li>
+          <li class="list-group-item"><a href="ViewTimeTable.aspx">View Time Table</a></li>
+          <li class="list-group-item"><a href="ViewDateSheet.aspx">View Date Sheet</a></li>
+          <li class="list-group-item"><a href="ViewCourseFee.aspx">View Course Fee</a></li>
+          
+        </ul>
+        
+      </div>
+    </div>
+       
+
+             <img src="images/lock.png" style="z-index:2;opacity:1;margin-left: 30px" />
+              
+        
+                             <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse2" style="font-size:12px">HOSTELS </a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse active">
+        <ul class="list-group">
+          <li class="list-group-item"><a href="Hostel/ViewRoom.aspx">View/Leave Room(s)</a></li>
+        </ul>
+        
+      </div>
+    </div>
+        
 
 
-
-            <div class="panel panel-default">
-        <div class="panel-heading">Switch Theme</div>
-        <div class="panel-body">
-          <select class="form-control">
-            <option>Paper_lantern</option>
-            <option>Theme Option</option>
-            <option>Paper_lantern</option>
-            <option>Theme Option</option>
-          </select>
+                
+        
+                             <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse3" style="font-size:12px">LIBRARY </a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse active">
+        <ul class="list-group">
+          <li class="list-group-item"><a href="Library/RequestMemberShip.aspx">Request MemberShip</a></li>
+          <li class="list-group-item"><a href="Library/AvailableBooks.aspx">View Available Books</a></li>
+       
+        </ul>
+        
+   
+    </div>
         </div>
-      </div></div>
+
+ <a href="LMS/CourseSelection.aspx" class="expand-panel-stats">LMS</a>
+            </div>
+
           <%} %>  
       
   </div>
@@ -205,6 +265,10 @@
 </body>
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
      <script type="text/javascript">
+    
+         $("document").ready(function () {
+             $("check")
+         })
          $("#srchbtn").click(function () {
              
                  $("#seachtab").toggle();

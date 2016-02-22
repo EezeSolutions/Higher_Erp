@@ -238,7 +238,7 @@ public partial class PaymentPage : System.Web.UI.Page
             {
                 if (status == 0)
                 {
-                    literaleWalletbtn.Text = "<a ID=\"btneWallet\" href=\"#\" class=\"btn btn-brown\" data-toggle=\"modal\" data-target=\"#myModal\">Pay using eWallet</a>";
+                    literaleWalletbtn.Text = "<a ID=\"btneWallet\" href=\"#\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#myModal\">Pay using eWallet</a>";
                 }
                 else
                 {
@@ -417,7 +417,7 @@ public partial class PaymentPage : System.Web.UI.Page
         }
         else
         {
-            Response.Redirect("~/Students/ProfilePage.aspx");
+            Response.Redirect("ProfilePage.aspx");
         }
 
     }
@@ -525,8 +525,8 @@ public partial class PaymentPage : System.Web.UI.Page
                                             DataSet ds = db.getProgramInfo(txnRef);
                                             if (ds.Tables[0].Rows.Count > 0)
                                             {
-                                                startchar = ds.Tables[0].Rows[0]["StartingFormn_Char"].ToString();
-                                                startNum = Convert.ToInt32(ds.Tables[0].Rows[0]["StartingFormnum"].ToString());
+                                                startchar = ds.Tables[0].Rows[0]["FormCh"].ToString();
+                                                startNum = Convert.ToInt32(ds.Tables[0].Rows[0]["FormNumber"].ToString());
 
                                                 int lastFormID = db.getLastProgramIdUser(startchar, programID);
                                                 if (lastFormID == 0)

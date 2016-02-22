@@ -16,7 +16,7 @@
        function uploadStarted(sender, args) {
 
 
-           $get("imgDisplay").style.display = "none";
+           $get("ContentPlaceHolder1_imgDisplay").style.display = "none";
 
        }
 
@@ -41,7 +41,7 @@
                     return false;
                 }
                 else {
-                    var imgDisplay = $get("imgDisplay");
+                    var imgDisplay = $get("ContentPlaceHolder1_imgDisplay");
                     imgDisplay.src = "images/loader.gif";
 
                     var path = '<%=FllUploadFolderPath %>';
@@ -540,6 +540,7 @@
 
                                                         <br />
                                                         <br />
+                                                        <br /><br /><br />
                                                         <div class="form-group">
                                                             
                                                             <div class="col-lg-6">
@@ -1778,7 +1779,7 @@
                                                                         ControlToValidate="txtjaRegno_previous" ValidationGroup="appPreviousRecord" ErrorMessage="JAMB Reg# should be 10  - 15 characters  <br/>"></asp:RegularExpressionValidator>
                                                                 </div>
                                                             </div>
-
+                                                            <br /><br /><br />
 
                                                             <div class="col-lg-6">
 
@@ -1794,7 +1795,7 @@
 
                                                                 </div>
                                                             </div>
-
+                                                            <br />
 
                                                         </div>
 
@@ -2171,9 +2172,10 @@
                                                                    <img id="imgDp" runat="server" style="width:200px;height:200px" src="" />
                                                                 </div>
                                                             </div>
+                                                           
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">Sur Name :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">Sur Name :</label>
                                                                 <div class="col-sm-8">
                                                                     <asp:Label  runat="server" ID="lblSuname" ></asp:Label>
                                                                    
@@ -2187,7 +2189,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">First Name :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">First Name :</label>
                                                                 <div class="col-sm-8">
                                                                     <asp:Label  runat="server" ID="lblFname"></asp:Label>
                                                                     
@@ -2201,7 +2203,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">Other Name :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">Other Name:</label>
                                                                 <div class="col-sm-8">
                                                                     <asp:Label  runat="server" ID="lblOtherName"></asp:Label>
                                                                     
@@ -2215,7 +2217,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">Gender :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">Gender :</label>
                                                                 <div class="col-sm-8">
                                                                     <asp:Label runat="server" ID="lblGender"></asp:Label>
                                                                     
@@ -2229,7 +2231,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">Phone # :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">Phone # :</label>
                                                                 <div class="col-sm-8">
                                                                     <asp:Label  runat="server" ID="lblPhonenum"></asp:Label>
                                                                     
@@ -2242,7 +2244,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">STO :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">STO :</label>
                                                                 <div class="col-sm-8">
                                                                     <asp:Label  runat="server" ID="lblstateoforigin"></asp:Label>
                                                                     
@@ -2255,7 +2257,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">LGA :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">LGA :</label>
                                                                 <div class="col-sm-8">
                                                                     <asp:Label  runat="server" ID="lblLocalGotArea"></asp:Label>
                                                                     
@@ -2292,7 +2294,7 @@
 
                                                         <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">Program :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">Program :</label>
                                                                 <div class="col-sm-8">
                                                                     <asp:Label   runat="server" ID="lblProgram" ></asp:Label>
                                                                    
@@ -2301,7 +2303,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">Course :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">Course :</label>
                                                                 <div class="col-sm-8">
                                                                     <asp:Label runat="server" ID="lblCourse"></asp:Label>
                                                                     
@@ -2342,7 +2344,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">JAMB Reg No :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">JAMB Reg No :</label>
                                                                 <div class="col-sm-8">
                                                                     <asp:Label runat="server" ID="lblJambRegno" ></asp:Label>
                                                                    
@@ -2353,7 +2355,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">JAMB Exm Year :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">JAMB Exm Year :</label>
                                                                 <div class="col-sm-8">
                                                                    
                                                                     <asp:Label runat="server" ID="lblJambExamyear" ></asp:Label>
@@ -2369,7 +2371,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">JAMB Full Name :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">JAMB Full Name :</label>
                                                                 <div class="col-sm-8">
                                                                     <asp:Label runat="server" ID="lblJambFullName" ></asp:Label>
                                                                     
@@ -2380,7 +2382,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">Institution Attended :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">Institution Attended :</label>
                                                                 <div class="col-sm-8">
                                                                    <asp:Label runat="server" ID="lblInstitutionAttended" ></asp:Label>
 
@@ -2396,7 +2398,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">Course Name :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">Course Name :</label>
                                                                 <div class="col-sm-8">
                                                                  <asp:Label runat="server" ID="lblCourseName" ></asp:Label>
 
@@ -2406,7 +2408,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">Course Type :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">Course Type :</label>
                                                                 <div class="col-sm-8">
                                                                    <asp:Label runat="server" ID="courseType" ></asp:Label>
 
@@ -2423,7 +2425,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">Course Grade :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">Course Grade :</label>
                                                                 <div class="col-sm-8">
                                                                    <asp:Label runat="server" ID="lblCourseGrade" ></asp:Label>
 
@@ -2433,7 +2435,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">Year Completed : </label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">Year Completed : </label>
                                                                 <div class="col-sm-8">
                                                                    <asp:Label runat="server" ID="yearCompleted" ></asp:Label>
 
@@ -2450,7 +2452,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">Industrial Training Starts :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">Industrial Training Starts :</label>
                                                                 <div class="col-sm-8">
                                                                    
 
@@ -2462,7 +2464,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">Industrial Training Ends :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">Industrial Training Ends :</label>
                                                                 <div class="col-sm-8">
                                                                     
                                                                     <asp:Label runat="server" ID="lblIndustrialEnd" ></asp:Label>
@@ -2495,9 +2497,9 @@
                                                                 </div></div>
                                                     <div class="form-group">
 
-                                                            <div class="col-lg-12">
+                                                            <div class="col-lg-6">
                                                               
-                                                                <label class="col-sm-3 control-label">Your Cbt Schedule :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">Your Cbt Schedule :</label>
                                                                 <div class="col-sm-8">
                                                                     <asp:Label   runat="server" ID="lblCbtSchedule" ></asp:Label>
                                                                    
@@ -2511,7 +2513,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">CBT UserName :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">CBT UserName :</label>
                                                                 <div class="col-sm-8">
                                                                     <asp:Label  runat="server" ID="labelCbtUser"></asp:Label>
                                                                     
@@ -2525,7 +2527,7 @@
 
                                                             <div class="col-lg-6">
 
-                                                                <label class="col-sm-4 control-label">CBT Password :</label>
+                                                                <label class="col-sm-4 control-label" style="color:brown">CBT Password :</label>
                                                                 <div class="col-sm-8">
                                                                     <asp:Label  runat="server" ID="lblCbtPass"></asp:Label>
                                                                     

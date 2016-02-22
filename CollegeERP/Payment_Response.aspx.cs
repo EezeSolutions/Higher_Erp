@@ -104,8 +104,8 @@ public partial class Payment_Response : System.Web.UI.Page
                                 DataSet ds = db.getProgramInfo(txnRef);
                                 if (ds.Tables[0].Rows.Count > 0)
                                 {
-                                    startchar = ds.Tables[0].Rows[0]["StartingFormn_Char"].ToString();
-                                    startNum = Convert.ToInt32(ds.Tables[0].Rows[0]["StartingFormnum"].ToString());
+                                    startchar = ds.Tables[0].Rows[0]["FormCh"].ToString();
+                                    startNum = Convert.ToInt32(ds.Tables[0].Rows[0]["FormNumber"].ToString());
                                     
                                     int lastFormID = db.getLastProgramIdUser(startchar,programid);
                                     if (lastFormID == 0)

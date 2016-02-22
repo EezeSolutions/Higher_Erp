@@ -9,23 +9,137 @@
             alert(document.getElementById("pid").value + "|" + document.getElementById("sd").value + "|" + document.getElementById("amount").value + "|" + document.getElementById("tid").value);
             alert(document.getElementById("hash").value);
         }
+        function confirmpayment() {
+            var fee = '<%= this.eWalletFee %>';
+                      var tnx_ref = '<%= this.tnx_ref %>';
+                      var feetype = '<%= this.paymentType %>';
+
+                      var appID = '<%= this.applicationID %>';
+
+                      fee = parseInt(fee) + parseInt('<%=ConfigurationManager.AppSettings["transcationFee"].ToString() %>');
+
+                      var pin = document.getElementById("txtPin").value;
+                      var enumber = document.getElementById("txteWalletNum").value;
+
+                      var delFlag = confirm('A fee of ₦' + fee + '  will be deducted from  eWallet # (' + enumber + ') , Do you want to proceed?');
+                      if (delFlag) {
+
+                          document.getElementById("showLoading").style.display = "inline";
+                          PageMethods.eWalletPayment(fee, tnx_ref, feetype, enumber, appID, pin, paymentSuccess);
+                      }
+                  }
+
+                  function paymentSuccess(resulttxt, userContext, methodName) {
+                      //alert(resulttxt);
+                      //if (resulttxt.length > 0)
+                      {
+                          document.getElementById("showLoading").style.display = "none";
+                          document.getElementById("eWalletPaymentInfo").innerHTML = resulttxt;
+                          //document.getElementById("txtPin").value = "";
+
+                          document.getElementById("btnPay").style.display = "none";
+                          document.getElementById("btnPay").disabled = true;
+
+                          if (resulttxt.indexOf("You transcation has been processed successfully") > -1) {
+                              //window.location = "ProfilePage.aspx";
+                              locationvar = "ProfilePage.aspx";
+                          }
+                          else {
+                              locationvar = window.location.href;
+                          }
+                      }
+                  }
+
+                  var locationvar = window.location.href;
     </script>
   
  <asp:ScriptManager runat="server" EnablePageMethods="true"></asp:ScriptManager>
     
+        
+    
+     
+         <div class="middle-content">
+  	<div class="main-container">
+
+                  <div class="modal fade" id="myModal_Suspended" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="H1">Account Suspended</h4>
+      </div>
+      <div class="modal-body">
+      <div id="Div2">
+          
+      <label class="btn btn-danger btn-block" >Your eWallet Account # '<%=this.enumber %>'  has been suspended.<br /> Please contact administration for details !</label>
+       </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" onclick="window.location.href = locationvar;" data-dismiss="modal">Close</button>
+        
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
          <div class="panel panel-default">
+             <div class="panel-heading">
+        <button type="button" class="close" style="color:white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Confirm eWallet Details:</h4><h5>(All attemps will be logged for security reasons)</h5>
+         </div>
+             </div>
+      </div>
+        <div class="panel-body">
+      <div class="modal-body">
+      <div id="eWalletPaymentInfo">
+          
+     <label>eWallet # :   <input type="text" class="form-control" value='<%=this.enumber %>' id="txteWalletNum" /> </label>
+      <label>PinCode :   <input type="password" class="form-control" id="txtPin" /> </label>
+    
+       
+       </div>
+      </div>
+            </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="btnPay" style="display:inline" onclick="confirmpayment();">Pay</button>
+        <button type="button" class="btn btn-danger" onclick="window.location.href = locationvar;" data-dismiss="modal">Close</button>
+        
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+            <div id="showLoading" style="display:none;position: fixed; text-align: center; height: 100%; width: 100%; top: 0; right: 0; left: 0; z-index: 9999999; background-color: #000000; opacity: 0.7;">
+            <asp:Image ID="imgUpdateProgress" runat="server" ImageUrl="~/Images/loader.gif" AlternateText="Registering Account Please Wait ..." ToolTip="Registering Account Please Wait ..." style="padding: 10px;position:fixed;top:45%;left:50%;" />
+        </div>
+     
+
+
+      
+     
+	</div>
+  </div>
+             <div class="panel panel-default">
              <div class="panel-heading">Confirm Payment Details</div>
                         <div class="panel-body">
           
 		  <div class="loginPanel" style="width:850px;min-height:50px" >
 		<div class="site-logo text-center"></div>
               <div class="col-sm-12">
-                  <div class="col-sm-3"></div>
-                  <div class="col-sm-3">
+                 
+                  <div class="col-sm-4">
                   <img src="images/Interswitch1.png" />
                       </div>
-                  <div class="col-sm-3"></div>
-                  <div class="col-sm-6">
+                  <div class="col-sm-4">
+                      <img src="images/Interswitch.png" />
+                  </div>
+                  <div class="col-sm-4">
                   <img src="images/Interswitch2.png" />
                       </div>
               </div>
@@ -134,6 +248,6 @@
 
       
 
-              </div></div></div>
-  
+              </div></div>
+  </div>
     </asp:Content>

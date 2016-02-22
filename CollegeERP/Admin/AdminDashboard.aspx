@@ -89,6 +89,45 @@
         </div>
       </div>
       <div class="panel panel-default">
+        <div class="panel-heading">EWallet Functions</div>
+        <div class="panel-body">
+          <div class="row">
+           
+          
+            <div class="col-sm-4">
+              <a href="eWalletTransactionList.aspx" class="main-links">
+                <img src="../images/12-sqlbd.jpg">
+                <span>EWallet transactions</span>
+              </a>
+            </div>
+            <div class="col-sm-4">
+              <a href="eWalletHistory.aspx" class="main-links">
+                <img src="../images/13-remotesql.jpg">
+                <span>EWallet History</span>
+              </a>
+            </div>
+              <div class="col-sm-4">
+              <a href="eWallet_invalid_payment_attempts.aspx" class="main-links">
+                <img src="../images/13-remotesql.jpg">
+                <span>EWallet Invalid Attempts</span>
+              </a>
+            </div>
+               <div class="col-sm-4">
+              <a href="eWalletPaymentDepositApplication.aspx" class="main-links">
+                <img src="../images/13-remotesql.jpg">
+                <span>EWallet Deposit Applications</span>
+              </a>
+            </div>
+              <div class="col-sm-4">
+              <a href="ProcesseddApplications.aspx" class="main-links">
+                <img src="../images/13-remotesql.jpg">
+                <span>Processed Applications</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
         <div class="panel-heading">Employees</div>
         <div class="panel-body">
           <div class="row">

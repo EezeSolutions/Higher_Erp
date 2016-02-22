@@ -37,13 +37,9 @@ public partial class Login : System.Web.UI.Page
                 FormsAuthentication.SetAuthCookie(username.Text, true);
                 string UserID = "";
                 bool LoggedStatus = (System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
-                if (System.Web.HttpContext.Current.User != null)
-                {
-                    if (LoggedStatus)
-                    {
-                        if (Membership.GetUser() != null)
-                        {
-                            UserID = Membership.GetUser().ProviderUserKey.ToString();
+
+                             MembershipUser mu = Membership.GetUser(username.Text);
+                            UserID = mu.ProviderUserKey.ToString();
                             DatabaseFunctions d = new DatabaseFunctions();
                             int uid = d.GetCandidateID(UserID);
                             Session["username"] = username.Text;
@@ -56,19 +52,14 @@ public partial class Login : System.Web.UI.Page
                             Session["candidate"] = candidate;
 
                             if (returnuurl == "")
+                            {
                                 Response.Redirect("ProfilePage.aspx");
+                            }
                             else
                             {
                                 Response.Redirect(returnuurl);
                             }
-                        }
-                    }
-                    else
-                    {
-
-                    }
-                }
-
+                  
             }
             else
             {
